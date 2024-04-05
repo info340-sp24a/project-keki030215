@@ -1,0 +1,16 @@
+a:visited {
+    color:blue
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    background-color: blanchedalmond;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #eee;
+}
