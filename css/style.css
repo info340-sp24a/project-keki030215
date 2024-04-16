@@ -5,6 +5,10 @@ body {
     
 }
 
+.profile-img {
+    width: 150px;
+}
+
 html {
     height: 100%;
 }
