@@ -1,14 +1,18 @@
+/* Navigation Bar Color and Style */
 nav {
-    background-color: #51688B;
+    background-color: rgb(57, 72, 95);
+    border-bottom: 5px solid #494978;
     padding: 5px;
 }
 
+/* Navigation Bar Alignment */
 nav li {
     display: inline-block;
 }
 
+/* Navigation Button Styling */
 nav button {
-    margin: 0 3rem;
+    margin: 0 2rem;
     padding: 5px 1.5rem;
     background-color: #D6D8E8;
     border-radius: 10px;
@@ -19,21 +23,50 @@ nav button {
     font-weight: bold;
 }
 
+/* Heading 1 Styling */
 h1 {
     color: #E5F0FF;
 }
 
+/* Background Image */
 body {
-    background-image: url('../img/starrynight3.jpg');
+    background-image: url('../img/starrynight4.jpg');
     background-position: center;
     background-size: cover;
-    
+    background-color: #233341;
+}
+
+/* Dream Diary Search Bar and Button Positioning */
+body main form {
+    margin: 1rem;
+    text-align: center;
+}
+
+/* Dream Diary Search Bar Color */
+body main form input {
+    width: 50%;
+    background-color: rgb(236, 244, 247);
+}
+
+.card {
+    border-width: 3px;
+}
+
+.card button {
+    position: absolute;
+    right: 1rem;
 }
 
 html {
     height: 100%;
 }
 
+/* Footer Styling */
 footer {
-    background-color: rgb(194, 211, 255);
+    background-color: rgb(71, 82, 110);
+    border-top: 2px solid #c2b1cb;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: white;
 }
