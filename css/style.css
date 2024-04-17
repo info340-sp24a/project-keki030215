@@ -57,6 +57,10 @@ body main form input {
     right: 1rem;
 }
 
+.profile-img {
+    width: 150px;
+}
+
 html {
     height: 100%;
 }
