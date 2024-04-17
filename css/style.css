@@ -10,6 +10,11 @@ nav li {
     display: inline-block;
 }
 
+/* Navigation Text Styling */
+nav h1 {
+    margin-top: 1rem;
+}
+
 /* Navigation Button Styling */
 nav button {
     margin: 0 2rem;
@@ -55,6 +60,20 @@ body main form input {
 .card button {
     position: absolute;
     right: 1rem;
+}
+
+.add-dream-btn {
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.row-1st {
+    margin-top: 1rem;
+}
+
+.row-2nd {
+    margin-top: 1rem;
 }
 
 .profile-img {
