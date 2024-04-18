@@ -4,6 +4,7 @@ p, h2 {
 
 /* Navigation Bar Color and Style */
 nav {
+    font-family: "Comfortaa", sans-serif;
     background-color: rgb(57, 72, 95);
     border-bottom: 5px solid #494978;
     padding: 5px;
@@ -47,12 +48,14 @@ body {
 
 /* Dream Diary Search Bar and Button Positioning */
 body main form {
+    font-family: "Comfortaa", sans-serif;
     margin: 1rem;
     text-align: center;
 }
 
 /* Dream Diary Search Bar Color */
 body main form input {
+    font-family: "Comfortaa", sans-serif;
     width: 50%;
     background-color: rgb(236, 244, 247);
 }
@@ -92,18 +95,62 @@ body main form input {
     color: white;
 }
 
+/* Corkboard Add Dream Button Styling */
 .add-dream-btn {
+    font-family: "Comfortaa", sans-serif;
     margin: 2rem;
     display: flex;
     justify-content: center;
 }
 
+/* Corkboard Dream Card Styling */
 .row-1st {
     margin-top: 1rem;
 }
 
 .row-2nd {
     margin-top: 1rem;
+}
+
+/* Corkboard Card Body Styling */
+.corkboard-card h2{
+    display: flex;
+    justify-content: center;
+}
+
+.corkboard-card p{
+    display: flex;
+    justify-content: center;
+}
+
+/* Corkboard Selector Body Styling */
+.select-dream-btn {
+    font-family: "Comfortaa", sans-serif;
+    margin-top: 10rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.tags-selection {
+    margin-top: 8rem;
+    margin-bottom: 3rem;
+    font-family: "Comfortaa", sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.select-your-dream {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+}
+
+.tag {
+    font-family: "Comfortaa", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
 }
 
 .profile-img {
@@ -116,6 +163,7 @@ html {
 
 /* Footer Styling */
 footer {
+    font-family: "Comfortaa", sans-serif;
     background-color: rgb(71, 82, 110);
     border-top: 2px solid #c2b1cb;
     position: fixed;
