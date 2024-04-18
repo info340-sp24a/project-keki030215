@@ -1,3 +1,7 @@
+p, h2 {
+    font-family: "Comfortaa", sans-serif;
+}
+
 /* Navigation Bar Color and Style */
 nav {
     background-color: rgb(57, 72, 95);
@@ -53,13 +57,39 @@ body main form input {
     background-color: rgb(236, 244, 247);
 }
 
+/* Dream Diary Card */
 .card {
     border-width: 3px;
 }
 
+/* Dream Diary Normal Dream */
+.normal-dream {
+    background-color: rgb(170, 170, 241);
+}
+
+/* Dream Diary Nightmare */
+.nightmare {
+    background-color: rgb(223, 79, 72);
+}
+
+/* Dream Diary Lucid Dream */
+.lucid-dream {
+    background-color: rgb(180, 125, 217);
+}
+
+/* Dream Diary Card Button */
 .card button {
+    background-color: #848794;
+    color: rgb(240, 241, 248);
+    border-radius: 5px;
     position: absolute;
     right: 1rem;
+}
+
+.dream-title {
+    text-align: center;
+    font-weight: bold;
+    color: white;
 }
 
 .add-dream-btn {
