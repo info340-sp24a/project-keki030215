@@ -211,10 +211,12 @@ html {
 .profile-main-bg {
     background-color:#2d5172;
     color: #E5F0FF;
+    border-radius: 10px;
 }
 
 .profile-sub-bg {
     background-color:#696586;
+    border-radius: 10px;
 }
 
 /* Footer Styling */
@@ -227,3 +229,27 @@ footer {
     bottom: 0;
     color: white;
 }
+
+@media (min-width: 598px) {
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+    }
+
+    body main form {
+        display: none;
+    }
+    
+    .card {
+        margin: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        white-space: nowrap;
+    }
+} 
