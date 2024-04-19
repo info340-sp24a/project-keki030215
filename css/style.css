@@ -33,9 +33,33 @@ nav button {
     font-weight: bold;
 }
 
+nav button:hover {
+    background-color: #89A0B5;
+}
+
 /* Heading 1 Styling */
 h1 {
     color: #E5F0FF;
+}
+
+/* "Welcome!" Styling */
+.toptitle {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Form Styling */
+label {
+    color: white;
+}
+
+form {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+[type="submit"] {
+    margin-top: 40px;
 }
 
 /* Background Image */
@@ -154,7 +178,12 @@ body main form input {
 }
 
 .profile-img {
+    display: flex;
+    justify-content: center;
     width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 html {
@@ -170,4 +199,11 @@ footer {
     width: 100%;
     bottom: 0;
     color: white;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
