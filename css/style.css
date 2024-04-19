@@ -1,4 +1,4 @@
-p, h2 {
+p, h1, h2, label {
     font-family: "Comfortaa", sans-serif;
 }
 
@@ -35,6 +35,12 @@ nav button {
 
 nav button:hover {
     background-color: #89A0B5;
+}
+
+/* Main Page Styling */
+.main-page-text {
+    font-family: "Comfortaa", sans-serif;
+    color: #E5F0FF;;
 }
 
 /* Heading 1 Styling */
