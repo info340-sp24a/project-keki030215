@@ -153,6 +153,10 @@ body main form input {
     justify-content: center;
 }
 
+.grid-img {
+    height: 100px;
+}
+
 /* Corkboard Selector Body Styling */
 .select-dream-btn {
     font-family: "Comfortaa", sans-serif;
