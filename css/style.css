@@ -156,12 +156,7 @@ body main form input {
 }
 
 /* Corkboard Card Body Styling */
-.corkboard-card h2{
-    display: flex;
-    justify-content: center;
-}
-
-.corkboard-card p{
+.corkboard-card h2, p{
     display: flex;
     justify-content: center;
 }
@@ -263,10 +258,44 @@ footer {
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
     nav ul {
+        margin-top: 2rem;
         display: flex;
         flex-direction: row;
         white-space: nowrap;
     }
+
+    nav ul li button {
+        margin-top: 0.75rem;
+    }
+
+    body main form {
+        display: inline-block;
+    }
+    
+}
+
+@media (min-width: 992px) {
+    nav ul li button {
+        margin-top: 1.25rem;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
+
+    .corkboard-card {
+        width: 300px;
+        margin: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .grid-img {
+        padding-top: 0.5rem;
+    }
+
 } 
