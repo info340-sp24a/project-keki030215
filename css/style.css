@@ -1,4 +1,4 @@
-p, h2 {
+p, h1, h2, label {
     font-family: "Comfortaa", sans-serif;
 }
 
@@ -33,9 +33,39 @@ nav button {
     font-weight: bold;
 }
 
+nav button:hover {
+    background-color: #89A0B5;
+}
+
+/* Main Page Styling */
+.main-page-text {
+    font-family: "Comfortaa", sans-serif;
+    color: #E5F0FF;;
+}
+
 /* Heading 1 Styling */
 h1 {
     color: #E5F0FF;
+}
+
+/* "Welcome!" Styling */
+.toptitle {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Form Styling */
+label {
+    color: white;
+}
+
+form {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+[type="submit"] {
+    margin-top: 40px;
 }
 
 /* Background Image */
@@ -123,6 +153,10 @@ body main form input {
     justify-content: center;
 }
 
+.grid-img {
+    height: 100px;
+}
+
 /* Corkboard Selector Body Styling */
 .select-dream-btn {
     font-family: "Comfortaa", sans-serif;
@@ -154,11 +188,39 @@ body main form input {
 }
 
 .profile-img {
+    display: flex;
+    justify-content: center;
     width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 html {
     height: 100%;
+}
+
+/* profile styling */
+.profile-text {
+    font-family: "Comfortaa", sans-serif;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-main-bg {
+    background-color:#2d5172;
+    color: #E5F0FF;
+    border-radius: 10px;
+}
+
+.profile-sub-bg {
+    background-color:#696586;
+    border-radius: 10px;
 }
 
 /* Footer Styling */
@@ -171,3 +233,27 @@ footer {
     bottom: 0;
     color: white;
 }
+
+@media (min-width: 598px) {
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+    }
+
+    body main form {
+        display: none;
+    }
+    
+    .card {
+        margin: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        white-space: nowrap;
+    }
+} 
