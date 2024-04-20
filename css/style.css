@@ -250,7 +250,7 @@ footer {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     nav ul {
         display: flex;
         flex-direction: row;
