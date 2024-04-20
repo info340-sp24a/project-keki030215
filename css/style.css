@@ -125,6 +125,19 @@ body main form input {
     color: white;
 }
 
+.dream-tag {
+    width: auto;
+}
+
+.dream-entry-img {
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.dream-entry {
+    padding: 1rem;
+}
+
 /* Corkboard Add Dream Button Styling */
 .add-dream-btn {
     font-family: "Comfortaa", sans-serif;
