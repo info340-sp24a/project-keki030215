@@ -21,7 +21,7 @@
     <title>Dream Diary</title>
 
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="img/Dream Journal Favicon.png">
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
 </head>
 
@@ -32,30 +32,32 @@
                 <h1>Dream Recorder</h1>
             </div>
             <ul>
-                <li><a href="index.html"><button type="button">Home</button></a></li>
-                <li><a href="corkboard.html"><button type="button">Corkboard</button></a></li>
-                <li><a href="dream-diary.html"><button type="button">Dream Diary</button></a></li>
-                <li><a href="profile.html"><button type="button">Profile</button></a></li>
+                <li><button type="button" onclick="document.location.href = 'index.html'">Home</button></li>
+                <li><button type="button" onclick="document.location.href = 'corkboard.html'"> Corkboard </button></li>
+                <li><button type="button" onclick="document.location.href = 'dream-diary.html'">Dream Diary</button></li>
+                <li><button type="button" onclick="document.location.href = 'profile.html'">Profile</button></li>
             </ul>
         </nav>
     </header>
+
     <main>
-        <section>
+        <div class="search-area">
             <form>
-                <input type="searchbar" id="searchbar" name="Search Bar" placeholder="Search for a dream">
-                <button class="search-button" type="button">Search</button>
+                <input type="text" id="searchbar" name="Search Bar" placeholder="Search for a dream">
             </form>
-        </section>
+            <button type="button">Search</button>
+        </div>
+
 
         <section>
             <div class="container">
                 <div class="row d-flex justify-content-evenly">
 
-                    <div class="dream-entry normal-dream card col-lg-4 col-sm-12 m-2 p-2">
+                    <div class="dream-entry normal-dream card col-md-4 col-sm-12 m-2 p-2">
                         <div>
-                            <p>
+                            <p class="dream-date">
                                 April 7
-                                <a href="dream-diary-selector.html"><button type="button">Edit Dream</button></a>
+                                <button type="button" onclick="document.location.href = 'dream-diary-selector.html'">Edit Dream</button>
                             </p>
                         </div>
                         <div><h2 class="dream-title">A Night in Amsterdam</h2></div>
@@ -74,11 +76,11 @@
                         </div>
                     </div>
 
-                    <div class="dream-entry nightmare card col-lg-4 col-sm-12 m-2 p-2">
+                    <div class="dream-entry nightmare card col-md-4 col-sm-12 m-2 p-2">
                         <div>
-                            <p>
+                            <p class="dream-date">
                                 April 9
-                                <a href="dream-diary-selector.html"><button type="button">Edit Dream</button></a>
+                                <button type="button" onclick="document.location.href = 'dream-diary-selector.html'">Edit Dream</button>
                             </p>
                         </div>
                         <div><h2 class="dream-title">The Fog Approaches</h2></div>
@@ -97,11 +99,11 @@
                         </div>
                     </div>
 
-                    <div class="dream-entry normal-dream card col-lg-4 col-sm-12 m-2 p-2">
+                    <div class="dream-entry normal-dream card col-md-4 col-sm-12 m-2 p-2">
                         <div>
-                            <p>
+                            <p class="dream-date">
                                 April 10
-                                <a href="dream-diary-selector.html"><button type="button">Edit Dream</button></a>
+                                <button type="button" onclick="document.location.href = 'dream-diary-selector.html'">Edit Dream</button>
                             </p>
                         </div>
                         <div><h2 class="dream-title">A Story of my Uncle</h2></div>
@@ -120,11 +122,11 @@
                         </div>
                     </div>
 
-                    <div class="dream-entry lucid-dream card col-lg-4 col-sm-12 m-2 p-2">
+                    <div class="dream-entry lucid-dream card col-md-4 col-sm-12 m-2 p-2">
                         <div>
-                            <p>
+                            <p class="dream-date">
                                 April 11
-                                <a href="dream-diary-selector.html"><button type="button">Edit Dream</button></a>
+                                <button type="button" onclick="document.location.href = 'dream-diary-selector.html'">Edit Dream</button>
                             </p>
                         </div>
                         <div><h2 class="dream-title">Lucid Dream in Tanzinistra</h2></div>
@@ -146,10 +148,10 @@
             </div>
         </section>
     </main>
-</body>
 
-<footer>
-    &copy; Copyright 2024
-</footer>
+    <footer>
+        &copy; Copyright 2024
+    </footer>
+</body>
 
 </html>
