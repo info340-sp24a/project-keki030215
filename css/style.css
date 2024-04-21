@@ -247,10 +247,19 @@ footer {
 }
 
 @media (min-width: 598px) {
+    nav {
+        display: flex;
+        flex-direction: column;
+    }
+
     nav ul {
         display: flex;
         flex-direction: column;
         white-space: nowrap;
+    }
+
+    nav button {
+        padding: 5px 1rem;;
     }
 
     body main form {
@@ -276,8 +285,13 @@ footer {
         white-space: nowrap;
     }
 
-    nav ul li button {
-        margin-top: 0.75rem;
+    nav .title-container {
+        align-self: center;
+    }
+
+    nav ul {
+        margin-top: 0.5rem;
+        justify-content: center;
     }
 
     body main form {
@@ -292,12 +306,24 @@ footer {
 }
 
 @media (min-width: 992px) {
-    nav ul li button {
+    nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    
+    nav ul {
         margin-top: 1.25rem;
+        padding-left: 0.5rem;
     }
 
-    h1 {
-        font-size: 3em;
+    nav h1 {
+        font-size: 2rem;
+        text-wrap: nowrap;
+    }
+
+    .top-title {
+        font-size: 3rem;
     }
 
     .corkboard-card {
