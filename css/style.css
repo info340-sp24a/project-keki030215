@@ -77,17 +77,18 @@ body {
 }
 
 /* Dream Diary Search Bar and Button Positioning */
-body main form {
+body main section form {
     font-family: "Comfortaa", sans-serif;
-    margin: 1rem;
+    display: block;
+    margin: 1rem auto;
     text-align: center;
 }
 
-/* Dream Diary Search Bar Color */
-body main form input {
+/* Dream Diary Search Bar Styling */
+body main section form input {
     font-family: "Comfortaa", sans-serif;
-    width: 50%;
     background-color: rgb(236, 244, 247);
+    width: 50%;
 }
 
 /* Dream Diary Card */
@@ -132,6 +133,9 @@ body main form input {
 .dream-entry-img {
     max-width: 300px;
     border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .dream-entry {
