@@ -310,11 +310,12 @@ footer {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
+        justify-content: center;
     }
     
     nav ul {
         margin-top: 1.25rem;
-        padding-left: 0.5rem;
+        padding-left: auto;
     }
 
     nav h1 {
