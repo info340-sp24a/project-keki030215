@@ -97,8 +97,7 @@ label {
     display: block;
     margin: 1rem auto;
     text-align: center;
-    padding: 0.5rem;
-    border-radius: 10px;
+    
 }
 
 .row-1st {
@@ -221,7 +220,8 @@ label {
 }
 
 .dream-entry-img {
-    max-width: 300px;
+    position: relative;
+    max-width: 80%;
     border-radius: 10px;
     display: block;
     margin-left: auto;
