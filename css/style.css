@@ -260,6 +260,12 @@ footer {
     .card {
         margin: 1rem;
     }
+
+    .corkboard-selector {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 }
 
 @media (min-width: 768px) {
@@ -277,7 +283,12 @@ footer {
     body main form {
         display: inline-block;
     }
-    
+
+    .corkboard-selector {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 }
 
 @media (min-width: 992px) {
