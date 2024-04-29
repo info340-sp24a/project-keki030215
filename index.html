@@ -28,24 +28,24 @@
 <body>
     <header>
         <nav>
-            <div class="title-container">
-                <h1>Dream Recorder</h1>
-            </div>
-            <ul>
-                <li><button type="button" onclick="document.location.href = 'index.html'">Home</button></li>
-                <li><button type="button" onclick="document.location.href = 'corkboard.html'"> Corkboard </button></li>
-                <li><button type="button" onclick="document.location.href = 'dream-diary.html'">Dream Diary</button></li>
-                <li><button type="button" onclick="document.location.href = 'profile.html'">Profile</button></li>
-            </ul>
+          <div class="title-container">
+            <h1>Dream Recorder</h1>
+          </div>
+          <ul>
+            <li><button type="button" aria-label="Homepage" onclick="document.location.href = 'index.html'">Home</button></li>
+            <li><button type="button" aria-label="Corkboard" onclick="document.location.href = 'corkboard.html'"> Corkboard </button></li>
+            <li><button type="button" aria-label="Dream Dairy" onclick="document.location.href = 'dream-diary.html'">Dream Diary</button></li>
+            <li><button type="button" aria-label="Profile" onclick="document.location.href = 'profile.html'">Profile</button></li>
+          </ul>
         </nav>
-    </header>
+      </header>
     <h1 class="toptitle">Welcome!</h1>
     <form class="home-form">
         <div class="form-group main-page-text">
             <label for="FormControlTextarea1" class="main-page-text">What did you dream about?</label>
             <textarea class="form-control" id="FormControlTextarea1" rows="9" placeholder="Tell us what you dream about..."></textarea>
         </div>
-        <button type="submit" class="d-grid gap-2 col-4 mx-auto btn btn-primary main-page-text main-page-button">FINISH</button>
+        <button type="submit" aria-label="Submit" class="d-grid gap-2 col-4 mx-auto btn btn-primary main-page-text main-page-button">FINISH</button>
     </form>
 
     <footer>
