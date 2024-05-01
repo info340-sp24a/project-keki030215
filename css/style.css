@@ -70,6 +70,7 @@ form {
 
 [type="submit"] {
     margin-top: 20px;
+    background-color: #002684;
 }
 
 
@@ -178,12 +179,12 @@ label {
 .dream-title {
     text-align: center;
     font-weight: bold;
-    color: white;
+    color: black;
 }
 
 .dream-date {
     font-weight: bold;
-    color: white;
+    color: black;
 }
 
 .normal-dream {
@@ -199,8 +200,8 @@ label {
 }
 
 .dream-entry button {
-    background-color: #848794;
-    color: rgb(240, 241, 248);
+    background-color: lightgray;
+    color: black;
     border-radius: 5px;
     position: absolute;
     right: 1rem;
@@ -233,6 +234,8 @@ label {
 }
 
 .tag-button {
+    background-color: lightgray !important;
+    color: black !important;
     position: relative;
     bottom: 0;
     margin-bottom: 1rem;
