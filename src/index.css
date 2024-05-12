@@ -1,0 +1,385 @@
+/* HTML */
+html {
+    height: 100%;
+}
+
+/* Body */
+body {
+    font-family: "Comfortaa", sans-serif;
+    background-image: url('../img/starrynight4.jpg');
+    background-position: center;
+    background-size: cover;
+    background-color: #233341;
+    padding-bottom: 30px;
+}
+
+/* Nav Bar */
+nav {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(57, 72, 95);
+    border-bottom: 5px solid #494978;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    list-style-type: none;
+    text-align: center;
+}
+
+/* Navigation Button */
+nav button {
+    margin: 5px 0;
+    padding: 5px 1.5rem;
+    background-color: #D6D8E8;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #89A0B5;
+    color: #274153;
+    font-weight: bold;
+}
+
+nav button:hover {
+    background-color: #89A0B5;
+}
+
+
+
+
+
+/* Main Page Text Styling */
+h1, .main-page-text {
+    color: #E5F0FF;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 1.5rem;
+}
+
+.toptitle { 
+    margin-top: 50px;
+}
+
+form {
+    padding: 0 20px;
+}
+
+[type="submit"] {
+    margin-top: 20px;
+    background-color: #002684;
+}
+
+
+
+
+/* Card Styling */
+.card {
+    margin: 0.5rem 1rem;
+    border-width: 3px;
+}
+
+
+
+
+/* Form Styling */
+label {
+    color: white;
+}
+
+
+
+
+/* Corkboard */
+.add-dream-btn {
+    display: block;
+    margin: 1rem auto;
+    text-align: center;
+    
+}
+
+.row-1st {
+    margin-top: 1rem;
+}
+
+.row-2nd {
+    margin-top: 1rem;
+}
+
+.corkboard-card h2, p{
+    text-align: center;
+}
+
+
+.grid-img {
+    height: 100px;
+}
+
+
+
+
+/* Corkboard Selector */
+.corkboard-selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.select-dream-btn {
+    margin-top: 10rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.tags-selection {
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.select-your-dream {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+}
+
+.tag {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+
+
+
+/* Dream Diary  */
+.search-area {
+    display: block;
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.search-area input {
+    background-color: rgb(236, 244, 247);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.search-area button {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.dream-title {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}
+
+.dream-date {
+    font-weight: bold;
+    color: black;
+}
+
+.normal-dream {
+    background-color: rgb(170, 170, 241);
+}
+
+.nightmare {
+    background-color: rgb(223, 79, 72);
+}
+
+.lucid-dream {
+    background-color: rgb(180, 125, 217);
+}
+
+.dream-entry button {
+    background-color: lightgray;
+    color: black;
+    border-radius: 5px;
+    position: absolute;
+    right: 1rem;
+}
+
+.dream-tag {
+    width: auto;
+}
+
+
+
+
+/* Dream Diary Selector */
+.dream-entry {
+    padding: 1rem;
+    padding-bottom: 50px;
+}
+
+.dream-entry-img {
+    position: relative;
+    max-width: 80%;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dream-description {
+    padding: 1rem;
+}
+
+.tag-button {
+    background-color: lightgray !important;
+    color: black !important;
+    position: relative;
+    bottom: 0;
+    margin-bottom: 1rem;
+}
+
+
+
+
+/* Profile */
+.profile-img {
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-main-bg {
+    background-color:#2d5172;
+    color: #E5F0FF;
+    border-radius: 10px;
+}
+
+.profile-sub-bg {
+    background-color:#696586;
+    border-radius: 10px;
+}
+
+
+
+
+/* Footer Styling */
+footer {
+    background-color: rgb(71, 82, 110);
+    border-top: 2px solid #c2b1cb;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: white;
+}
+
+
+
+
+@media (min-width: 598px) {
+    /* Nav Bar */
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        white-space: nowrap;
+        margin-top: 0.5rem;
+        justify-content: center;
+    }
+
+    nav .title-container {
+        align-self: center;
+    }
+
+    /* Navigation Button */
+    nav button {
+        margin: 0 5px;
+    }
+
+
+    body main form {
+        display: inline-block;
+    }
+
+
+    .corkboard-selector {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+}
+
+
+
+
+@media (min-width: 768px) {
+    nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        padding-right: 2rem;
+    }
+    
+    nav ul {
+        margin-top: 1.25rem;
+        padding-left: auto;
+    }
+
+    nav h1 {
+        font-size: 2rem;
+        text-wrap: nowrap;
+    }
+
+    .top-title {
+        font-size: 3rem;
+    }
+
+    .corkboard-card {
+        margin: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .grid-img {
+        padding-top: 0.5rem;
+    }
+
+    .dream-date {
+        text-align: left;
+    }
+}
+
+
+
+
+@media (min-width: 992px) {
+    /* Navigation Bar Color and Style */
+    nav {
+        padding: 5px;
+    }
+
+    /* Navigation Bar Alignment */
+    nav li {
+        display: inline-block;
+    }
+
+    /* Navigation Text Styling */
+    nav h1 {
+        margin-top: 1rem;
+    }
+}
