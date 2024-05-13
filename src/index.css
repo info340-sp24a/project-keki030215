@@ -63,8 +63,8 @@ h1 {
     margin-top: 50px;
 }
 
-.main-page-text textarea {
-    padding: 20px;
+form {
+    padding: 0 20px;
 }
 
 [type="submit"] {

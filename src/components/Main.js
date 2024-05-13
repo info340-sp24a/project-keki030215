@@ -16,7 +16,7 @@ export function Main(props) {
     return (
         <div className="text-center">
             <h1 className="toptitle">Welcome!</h1>
-            <form className="home-form" onSubmit={handleSubmit}>
+            <form className="row" onSubmit={handleSubmit}>
                 <div className="form-group main-page-text">
                     <label htmlFor="FormControlTextarea1" className="main-page-text">What did you dream about?</label>
                     <textarea
