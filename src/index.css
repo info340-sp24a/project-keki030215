@@ -7,7 +7,6 @@ html {
 body {
     font-family: "Comfortaa", sans-serif;
     background-image: url('../img/starrynight4.jpg');
-    background-position: center;
     background-size: cover;
     background-color: #233341;
     padding-bottom: 30px;
@@ -191,7 +190,7 @@ label {
     background-color: rgb(170, 170, 241);
 }
 
-.nightmare {
+.nightmare-dream {
     background-color: rgb(223, 79, 72);
 }
 

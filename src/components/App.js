@@ -1,26 +1,29 @@
 import React from 'react';
 
 import { NavigationBar } from "./NavigationBar"
-import { DreamDiary } from './DreamDiary';
+import { DreamDiary } from './DreamDiaryPage';
+import { DreamDiarySelector } from './DreamDiarySelectorPage';
 
+/*
+To test out the individual pages, put the components in the quotes in between <main> </main>
 
-// <DreamDiary />
+"<DreamDiary />"
+"<DreamDiarySelector />"
+*/
 
 export function App(props) {
     return (
         <div>
-            <body>
-                <header>
-                    <NavigationBar />
-                </header>
+            <header>
+                <NavigationBar />
+            </header>
 
-                <main>
-                </main>
+            <main>
+            </main>
 
-                <footer>
-                    &copy; Copyright 2024
-                </footer>
-            </body>
+            <footer>
+                &copy; Copyright 2024
+            </footer>
         </div>
     )
 }

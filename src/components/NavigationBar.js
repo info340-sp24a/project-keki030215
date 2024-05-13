@@ -3,14 +3,14 @@ import React from 'react';
 export function NavigationBar(props) {
     return (
         <nav>
-            <div class="title-container">
+            <div className="title-container">
                 <h1>Dream Recorder</h1>
             </div>
             <ul>
-                <li><button type="button" aria-label="Homepage" onclick="document.location.href = 'index.html'">Home</button></li>
-                <li><button type="button" aria-label="Corkboard" onclick="document.location.href = 'corkboard.html'"> Corkboard </button></li>
-                <li><button type="button" aria-label="Dream Dairy" onclick="document.location.href = 'dream-diary.html'">Dream Diary</button></li>
-                <li><button type="button" aria-label="Profile" onclick="document.location.href = 'profile.html'">Profile</button></li>
+                <li><button type="button" aria-label="Homepage">Home</button></li>
+                <li><button type="button" aria-label="Corkboard"> Corkboard </button></li>
+                <li><button type="button" aria-label="Dream Dairy">Dream Diary</button></li>
+                <li><button type="button" aria-label="Profile">Profile</button></li>
             </ul>
         </nav>
     )
