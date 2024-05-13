@@ -9,7 +9,7 @@ export function NavigationBar(props) {
             <ul>
                 <li><button type="button" aria-label="Homepage">Home</button></li>
                 <li><button type="button" aria-label="Corkboard"> Corkboard </button></li>
-                <li><button type="button" aria-label="Dream Dairy">Dream Diary</button></li>
+                <li><button type="button" aria-label="Dream Diary">Dream Diary</button></li>
                 <li><button type="button" aria-label="Profile">Profile</button></li>
             </ul>
         </nav>

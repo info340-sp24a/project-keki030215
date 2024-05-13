@@ -5,6 +5,8 @@ import { DreamDiary } from './DreamDiaryPage';
 import { DreamDiarySelector } from './DreamDiarySelectorPage';
 import { Corkboard } from './Corkboard';
 import { CorkboardSelector } from './CorkboardSelector';
+import { Main } from './Main';
+import { Profile } from './Profile';
 
 /*
 To test out the individual pages, put the components in the quotes in between <main> </main>
@@ -23,6 +25,7 @@ export function App(props) {
             </header>
 
             <main>
+            <Main />
             </main>
 
             <footer>

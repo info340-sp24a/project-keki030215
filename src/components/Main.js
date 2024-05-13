@@ -14,7 +14,7 @@ export function Main(props) {
     };
 
     return (
-        <div>
+        <div className="text-center">
             <h1 className="toptitle">Welcome!</h1>
             <form className="home-form" onSubmit={handleSubmit}>
                 <div className="form-group main-page-text">
@@ -30,10 +30,6 @@ export function Main(props) {
                 </div>
                 <button type="submit" aria-label="Submit" className="d-grid gap-2 col-4 mx-auto btn btn-primary main-page-text main-page-button">FINISH</button>
             </form>
-
-            <footer>
-            &copy; Copyright 2024
-            </footer>
         </div>
     );
 }
