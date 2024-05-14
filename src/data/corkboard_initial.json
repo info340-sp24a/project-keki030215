@@ -1,0 +1,32 @@
+[
+    {
+        "date": "4/2",
+        "imgSrc": "img/grid1-img.webp",
+        "imgAlt": "forest in dream",
+        "content": "grid 1 content"
+    },
+    {
+        "date": "4/10",
+        "imgSrc": "img/grid2-img.jpeg",
+        "imgAlt": "wave in dream",
+        "content": "grid 2 content"
+    },
+    {
+        "date": "4/6",
+        "imgSrc": "img/grid3-img.webp",
+        "imgAlt": "mountain in dream",
+        "content": "grid 3 content"
+    },
+    {
+        "date": "5/16",
+        "imgSrc": "img/grid4-img.webp",
+        "imgAlt": "a hand touching a leaf",
+        "content": "grid 4 content"
+    },
+    {
+        "date": "6/2",
+        "imgSrc": "img/grid5-img.webp",
+        "imgAlt": "grass in dream",
+        "content": "grid 5 content"
+    }
+]

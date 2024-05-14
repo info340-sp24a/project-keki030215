@@ -25,7 +25,7 @@ export function App(props) {
             </header>
 
             <main>
-            <Main />
+            <Corkboard />
             </main>
 
             <footer>
