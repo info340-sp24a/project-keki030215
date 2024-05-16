@@ -1,5 +1,6 @@
 import React from 'react';
 import Corkboard_Initial from '../data/corkboard_initial.json';
+import { useNavigate } from 'react-router-dom';
 
 export function Corkboard(props) {
     const cardItems = Corkboard_Initial.map((cardData, index) => (
@@ -9,24 +10,31 @@ export function Corkboard(props) {
         />
     ));
 
-    return (
-        <main>
-            <div className="add-dream-btn">
-                <button 
-                    className="btn btn-light btn-lg" 
-                    type="button" 
-                    aria-label="Add A Dream" 
-                >
-                    Add a Dream
-                </button>
+    let navigate = useNavigate();
+
+    function goToSelector() {
+        navigate("/corkboard-selector");
+    };
+
+  return (
+    <main>
+        <div className="add-dream-btn">
+            <button 
+                className="btn btn-light btn-lg" 
+                type="button" 
+                aria-label="Add A Dream" 
+                onClick={goToSelector}
+            >
+                Add a Dream
+            </button>
+        </div>
+        <div className="container">
+            <div className="row d-flex justify-content-center">
+                {cardItems}
             </div>
-            <div className="container">
-                <div className="row d-flex justify-content-center">
-                    {cardItems}
-                </div>
-            </div>
-        </main>
-    );
+        </div>
+    </main>
+  );
 }
 
 function CardItem(props) {

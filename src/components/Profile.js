@@ -1,12 +1,16 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Profile(props) {
-    const goToDreamDiary = () => {
-        window.location.href = 'dream-diary.html';
+
+    let navigate = useNavigate();
+
+    function goToDreamDiary() {
+        navigate("/dream-diary");
     };
 
-    const goToCorkboard = () => {
-        window.location.href = 'corkboard.html';
+    function goToCorkboard() {
+        navigate("/corkboard");
     };
 
     return (

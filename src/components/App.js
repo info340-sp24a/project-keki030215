@@ -1,4 +1,5 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import { NavigationBar } from "./NavigationBar"
 import { DreamDiary } from './DreamDiaryPage';
@@ -25,12 +26,13 @@ export function App(props) {
             </header>
 
             <main>
-                {/* < Main /> */}
-                { < DreamDiary /> }
-                {/* < DreamDiarySelector /> */}
-                {/* < Corkboard /> */}
-                {/* < CorkboardSelector /> */}
-                {/* < Profile /> */}
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/corkboard" element={<Corkboard />} />
+                    <Route path="/corkboard-selector" element={<CorkboardSelector />} />
+                    <Route path="/dream-diary" element={<DreamDiary />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Routes>
             </main>
 
             <footer>
