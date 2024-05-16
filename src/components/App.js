@@ -25,7 +25,12 @@ export function App(props) {
             </header>
 
             <main>
-            <Main />
+                {/* < Main /> */}
+                { < DreamDiary /> }
+                {/* < DreamDiarySelector /> */}
+                {/* < Corkboard /> */}
+                {/* < CorkboardSelector /> */}
+                {/* < Profile /> */}
             </main>
 
             <footer>
