@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Collapse from "react-bootstrap/Collapse";
 
-const dreamEntries = [
+const initialDreamEntries = [
     {date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
 
     {date:"April 9", title:"The Fog Approaches", dreamType:"nightmare", tags:["Nightmare Dream", "Scary", "Surreal"], img: "img/black-fog.jpg", entry:"I had a nightmare last night about the fog, a black, smokey-like mist that approached my house from all angles. It seeped through the bottom of the doorframe and engulfed me. I woke up as it covered my eyes."},
@@ -14,10 +14,11 @@ const dreamEntries = [
 ]
 
 export function DreamDiary(props) {
+    const { dreamEntries, newDreamNotifications, setNewDreamNotifications } = props;
     const [open, setOpen] = useState(false);
     const [selectedDream, setSelectedDream] = useState("");
 
-    const dreamEntryArray = dreamEntries.map((dreamEntry) => {
+    const dreamEntryArray = initialDreamEntries.map((dreamEntry) => {
         const transformed = <DreamCard dreamData={dreamEntry} key={dreamEntry.title} />
         return transformed;
     });
@@ -27,6 +28,12 @@ export function DreamDiary(props) {
         const entryName = event.target.name;
         setSelectedDream(entryName);
     }
+
+    function handleNotificationClick(index) {
+        alert(`New dream added: ${newDreamNotifications[index].entry}`);
+        const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
+        setNewDreamNotifications(updatedNotifications);
+    };
 
     function DreamCard(props) {
         const {dreamData} = props;
@@ -87,6 +94,20 @@ export function DreamDiary(props) {
 
     return (
         <div>
+            <div className="mt-2 d-flex notifications align-items-center justify-content-center">
+                {newDreamNotifications.map(function(dream, index) {
+                    return (
+                        <button 
+                         key={index} 
+                         className="notification-button" 
+                         aria-label="view new dream"
+                         onClick={function() { handleNotificationClick(index); }}>
+                         New Dream Added - Click to View!
+                        </button>
+                    );
+                })}
+            </div>
+
             <div className="search-area">
                 <form>
                     <label htmlFor="searchbar">Search for a dream:</label>

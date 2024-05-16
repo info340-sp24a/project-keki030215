@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
 export function NoInputModal({ show, onHide, title }) {
+
     useEffect(function setupAutoClose() {
         if (show) {
             const timer = setTimeout(onHide, 2000);
@@ -30,9 +32,17 @@ export function NoInputModal({ show, onHide, title }) {
 
 
 export function SubmissionModal({ show, onHide, title }) {
+
+    const navigate = useNavigate();
+
+    function handleGoToDreamDiary() {
+        onHide();
+        navigate('/dream-diary');
+    };
+
     useEffect(function setupAutoClose() {
         if (show) {
-            const timer = setTimeout(onHide, 2000);
+            const timer = setTimeout(onHide, 5000);
             return function cleanup() {
                 clearTimeout(timer);
             };
@@ -49,6 +59,14 @@ export function SubmissionModal({ show, onHide, title }) {
         <p>
             Your dream has been <mark>successfully recorded</mark>!
         </p>
+        <div className="d-grid col-6 mx-auto">
+            <button onClick={handleGoToDreamDiary} 
+            aria-label="go to dream diary" 
+            className="btn btn-dark"
+            type="button">
+                View in Dream Diary
+            </button>
+        </div>
       </Modal.Body>
     </Modal>
   );

@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import { NoInputModal, SubmissionModal } from './MainModal';
 
 export function Main(props) {
+    const { addDreamEntry } = props;
     const [dreamText, setDreamText] = useState("");
     const [showNoInputModal, setShowNoInputModal] = useState(false);
     const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Form submitted with dream text:", dreamText);
         setDreamText("");
         if (dreamText.trim() === "") {
             setShowNoInputModal(true);
           } else {
+            const newDream = {
+                date: new Date().toLocaleDateString("en-US"),
+                entry: dreamText,
+            };
+            addDreamEntry(newDream);
             setShowSubmissionModal(true);
+            setDreamText("");
             console.log("Form submitted with dream text:", dreamText);
           }
     };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { NavigationBar } from "./NavigationBar"
@@ -9,16 +9,18 @@ import { CorkboardSelector } from './CorkboardSelector';
 import { Main } from './Main';
 import { Profile } from './Profile';
 
-/*
-To test out the individual pages, put the components in the quotes in between <main> </main>
-
-"<DreamDiary />"
-"<DreamDiarySelector />"
-"<Corkboard />"
-"<CorkboardSelector />"
-*/
 
 export function App(props) {
+
+    const [dreamEntries, setDreamEntries] = useState([]); // save for future updating entries
+    const [newDreamNotifications, setNewDreamNotifications] = useState([])
+
+    const addDreamEntry = (newDream) => {
+        setDreamEntries(prevEntries => [...prevEntries, newDream]);
+        setNewDreamNotifications(prevNotifications => [...prevNotifications, newDream]);
+        console.log("A new dream is added:", newDream);
+    };
+
     return (
         <div>
             <header>
@@ -27,10 +29,14 @@ export function App(props) {
 
             <main>
                 <Routes>
-                    <Route path="/" element={<Main />} />
+                    <Route path="/" element={<Main addDreamEntry={addDreamEntry}/>} />
                     <Route path="/corkboard" element={<Corkboard />} />
                     <Route path="/corkboard-selector" element={<CorkboardSelector />} />
-                    <Route path="/dream-diary" element={<DreamDiary />} />
+                    <Route path="/dream-diary" 
+                     element={<DreamDiary 
+                                dreamEntries={dreamEntries} 
+                                newDreamNotifications={newDreamNotifications} 
+                                setNewDreamNotifications={setNewDreamNotifications}/>} />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>
             </main>
