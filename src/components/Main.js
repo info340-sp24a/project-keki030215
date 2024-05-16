@@ -1,16 +1,33 @@
 import React, { useState } from "react";
+import { NoInputModal, SubmissionModal } from './MainModal';
 
 export function Main(props) {
     const [dreamText, setDreamText] = useState("");
+    const [showNoInputModal, setShowNoInputModal] = useState(false);
+    const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Form submitted with dream text:", dreamText);
         setDreamText("");
+        if (dreamText.trim() === "") {
+            setShowNoInputModal(true);
+          } else {
+            setShowSubmissionModal(true);
+            console.log("Form submitted with dream text:", dreamText);
+          }
     };
 
     const handleInputChange = (event) => {
         setDreamText(event.target.value);
+    };
+
+    const handleNoInputCloseModal = () => {
+        setShowNoInputModal(false);
+    };
+
+    const handleSubmissionCloseModal = () => {
+        setShowSubmissionModal(false);
     };
 
     return (
@@ -30,6 +47,16 @@ export function Main(props) {
                 </div>
                 <button type="submit" aria-label="Submit" className="d-grid gap-2 col-4 mx-auto btn btn-primary main-page-text main-page-button">FINISH</button>
             </form>
+            <NoInputModal 
+                show={showNoInputModal} 
+                onHide={handleNoInputCloseModal} 
+                title="No Input... :-("
+            />
+            <SubmissionModal
+                show={showSubmissionModal}
+                onHide={handleSubmissionCloseModal}
+                title="Dream Recorded :-)"
+            />
         </div>
     );
 }
