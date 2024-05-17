@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 
 import { NavigationBar } from "./NavigationBar"
 import { DreamDiary } from './DreamDiaryPage';
-import { DreamDiarySelector } from './DreamDiarySelectorPage';
 import { Corkboard } from './Corkboard';
 import { CorkboardSelector } from './CorkboardSelector';
 import { Main } from './Main';
