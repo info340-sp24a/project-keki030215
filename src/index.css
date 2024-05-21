@@ -190,7 +190,6 @@ label {
     color: black;
 }
 
-
 .dream-entry-text {
     padding: 1rem;
 }
@@ -219,10 +218,6 @@ label {
     width: auto;
 }
 
-
-
-
-/* Dream Diary Selector */
 .dream-entry {
     padding: 1rem;
     padding-bottom: 50px;

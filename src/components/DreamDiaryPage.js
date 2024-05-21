@@ -43,7 +43,7 @@ export function DreamDiary(props) {
         if (dreamTypes.includes(dreamData.dreamType)) {
             dreamClassName = dreamClassName + dreamData.dreamType + "-dream ";
             if (open && selectedDream === dreamData.title) {
-                dreamClassName = dreamClassName + "col-7";
+                dreamClassName = dreamClassName + "col-md-7";
             } else {
                 dreamClassName = dreamClassName + "col-md-4 col-sm-12"
             }
@@ -70,13 +70,13 @@ export function DreamDiary(props) {
                 
                 <Collapse in={open && dreamData.title === selectedDream}>
                     <div>
-                        <div className="d-flex justify-content-evenly">
-                        <div className="card dream-entry-text">
-                            {dreamData.entry}
-                        </div>
-                        <div className="dream-image">
-                            <img className="dream-entry-img" src={dreamData.img} alt={dreamData.title} />
-                        </div>
+                        <div className="d-flex flex-column flex-md-row">
+                            <div className="card dream-entry-text">
+                                {dreamData.entry}
+                            </div>
+                            <div className="dream-image text-center">
+                                <img className="dream-entry-img" src={dreamData.img} alt={dreamData.title} />
+                            </div>
                         </div>
                         
                     </div>
