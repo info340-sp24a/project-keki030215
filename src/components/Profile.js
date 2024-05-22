@@ -1,36 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 
 export function Profile(props) {
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
 
     useEffect(() => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                // IdP data available using getAdditionalUserInfo(result)
-                // ...
-            })
-            .catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.customData.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
-            });
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            } else {
+                signInWithPopup(auth, provider)
+                    .then((result) => {
+                        setUser(result.user);
+                    })
+                    .catch((error) => {
+                        console.error('Error during sign-in:', error);
+                    });
+            }
+        });
+
+        return () => unsubscribe();
     }, [auth, provider]);
 
     function goToDreamDiary() {
@@ -41,13 +34,17 @@ export function Profile(props) {
         navigate('/corkboard');
     }
 
+    if (!user) {
+        return <p>Loading...</p>;
+    }
+
     return (
         <div className="container profile-text">
             <div className="row d-flex justify-content-center mt-5">
                 <div className="col-md-8">
                     <div className="box profile-main-bg p-3 mb-3">
-                        <h2>John Doe</h2>
-                        <img className="profile-img" src="img/profilepic.jpeg" alt="A man" />
+                        <h2>{user.displayName}</h2>
+                        <img className="profile-img" src={user.photoURL} alt={user.displayName} />
                     </div>
                 </div>
             </div>
