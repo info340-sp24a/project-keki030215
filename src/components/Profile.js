@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://firebase.google.com/docs/web/learn-more#config-object
 
 export function Profile(props) {
+    const navigate = useNavigate();
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
 
-    let navigate = useNavigate();
+    useEffect(() => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            });
+    }, [auth, provider]);
 
     function goToDreamDiary() {
-        navigate("/dream-diary");
-    };
+        navigate('/dream-diary');
+    }
 
     function goToCorkboard() {
-        navigate("/corkboard");
-    };
+        navigate('/corkboard');
+    }
 
     return (
         <div className="container profile-text">
