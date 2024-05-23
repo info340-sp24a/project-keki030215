@@ -3,8 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 
 import { NavigationBar } from "./NavigationBar"
 import { DreamDiary } from './DreamDiaryPage';
-import { Corkboard } from './Corkboard';
-import { CorkboardSelector } from './CorkboardSelector';
 import { Main } from './Main';
 import { Profile } from './Profile';
 import { initializeApp } from "firebase/app";
@@ -40,8 +38,6 @@ export function App(props) {
             <main>
                 <Routes>
                     <Route path="/" element={<Main addDreamEntry={addDreamEntry}/>} />
-                    <Route path="/corkboard" element={<Corkboard />} />
-                    <Route path="/corkboard-selector" element={<CorkboardSelector />} />
                     <Route path="/dream-diary" 
                      element={<DreamDiary 
                                 dreamEntries={dreamEntries} 
