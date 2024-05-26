@@ -2,24 +2,26 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Collapse from "react-bootstrap/Collapse";
+import { EditDreamModal } from "./EditDreamModal";
+import { getDatabase, ref, update as firebaseUpdate } from "firebase/database";
 
 const initialDreamEntries = [
-    {date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
+    {id:"sample1", date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
 
-    {date:"April 9", title:"The Fog Approaches", dreamType:"nightmare", tags:["Nightmare Dream", "Scary", "Surreal"], img: "img/black-fog.jpg", entry:"I had a nightmare last night about the fog, a black, smokey-like mist that approached my house from all angles. It seeped through the bottom of the doorframe and engulfed me. I woke up as it covered my eyes."},
+    {id:"sample2", date:"April 9", title:"The Fog Approaches", dreamType:"nightmare", tags:["Nightmare Dream", "Scary", "Surreal"], img: "img/black-fog.jpg", entry:"I had a nightmare last night about the fog, a black, smokey-like mist that approached my house from all angles. It seeped through the bottom of the doorframe and engulfed me. I woke up as it covered my eyes."},
 
-    {date:"April 10", title:"A Dream About my Great Uncle", dreamType:"normal", tags:["Normal Dream", "Family", "Bittersweet"], img: "img/great-uncle.jpg" , entry:"I had a dream where I was in my late great uncle's office in his grocery store. He was sitting on the couch at the far end of the room as he always did when relaxing and beckoned me over. We talked about how my life was and what I had planned for my future, culminating with him telling me how proud he was with how far I had come since his departure."},
+    {id:"sample3", date:"April 10", title:"A Dream About my Great Uncle", dreamType:"normal", tags:["Normal Dream", "Family", "Bittersweet"], img: "img/great-uncle.jpg" , entry:"I had a dream where I was in my late great uncle's office in his grocery store. He was sitting on the couch at the far end of the room as he always did when relaxing and beckoned me over. We talked about how my life was and what I had planned for my future, culminating with him telling me how proud he was with how far I had come since his departure."},
 
-    {date:"April 12", title:"Lucid Dream in Tanzinistra", dreamType:"lucid", tags:["Lucid Dream", "Fantasy"], img: "img/south-africa.jpg", entry: "I had a lucid dream in a fictitious world called Tanzinistra. Knowing it was a dream, I explored what it had to offer. I would finish this entry but I am too lazy."}
+    {id:"sample4", date:"April 12", title:"Lucid Dream in Tanzinistra", dreamType:"lucid", tags:["Lucid Dream", "Fantasy"], img: "img/south-africa.jpg", entry: "I had a lucid dream in a fictitious world called Tanzinistra. Knowing it was a dream, I explored what it had to offer. I would finish this entry but I am too lazy."}
 ]
 
 export function DreamDiary(props) {
-    const { dreamEntries, newDreamNotifications, setNewDreamNotifications } = props;
+    const { dreamEntries, newDreamNotifications, setNewDreamNotifications, setDreamEntries } = props;
     const [open, setOpen] = useState(false);
     const [selectedDream, setSelectedDream] = useState("");
 
     const dreamEntryArray = initialDreamEntries.map((dreamEntry) => {
-        const transformed = <DreamCard dreamData={dreamEntry} key={dreamEntry.title} />
+        const transformed = <DreamCard dreamData={dreamEntry} key={dreamEntry.id} />
         return transformed;
     });
 
@@ -39,10 +41,25 @@ export function DreamDiary(props) {
     };
     
     function handleEditSave(updatedDream) {
-        setNewDreamNotifications((prevNotifications) =>
-            prevNotifications.filter((notification) => notification.id !== updatedDream.id)
-        );
-        setShowEditModal(false);
+        const db = getDatabase();
+        const dreamRef = ref(db, `dreams/${updatedDream.id}`);
+        firebaseUpdate(dreamRef, updatedDream)
+            .then(() => {
+                setNewDreamNotifications((prevNotifications) =>
+                    prevNotifications.filter(notification => notification.id !== updatedDream.id)
+                );
+                setDreamEntries((prevEntries) => prevEntries.map((entry) => {
+                    if (entry.id === updatedDream.id) {
+                        return updatedDream;
+                    } else {
+                        return entry;
+                    }
+                }));                
+                setShowEditModal(false);
+            })
+            .catch(error => {
+                console.error("Error updating dream in Firebase:", error);
+            });
     }
 
     function handleClose() {

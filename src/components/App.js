@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { getDatabase, ref, onValue, set as firebaseSet, push as firebasePush } from 'firebase/database';
+import { getDatabase, ref, onValue, set as firebaseSet, push as firebasePush, update as firebaseUpdate } from 'firebase/database';
 import { NavigationBar } from './NavigationBar';
 import { DreamDiary } from './DreamDiaryPage';
 import { Main } from './Main';
@@ -40,15 +40,37 @@ export function App(props) {
     }, [db]);
 
     const addDreamEntry = (newDream) => {
-        const newDreamRef = firebasePush(ref(db, "dreams"));
-        firebaseSet(newDreamRef, newDream)
-        .then(function() {
-            setDreamEntries((prevEntries) => [...prevEntries, { ...newDream, id: newDreamRef.key }]);
-            setNewDreamNotifications((prevNotifications) => [...prevNotifications, { ...newDream, id: newDreamRef.key }]);
-        })
-        .catch(function(error) {
-            console.error("Error adding new dream to Firebase:", error);
-        });
+        if (newDream.id) {
+            const dreamRef = ref(db, `dreams/${newDream.id}`);
+            firebaseUpdate(dreamRef, newDream)
+                .then(() => {
+                    setDreamEntries((prevEntries) =>
+                        prevEntries.map((entry) => {
+                            if (entry.id === newDream.id) {
+                                return newDream;
+                            } else {
+                                return entry;
+                            }
+                        })
+                    );
+                    setNewDreamNotifications((prevNotifications) =>
+                        prevNotifications.filter((notification) => notification.id !== newDream.id)
+                    );
+                })
+                .catch((error) => {
+                    console.error("Error updating dream in Firebase:", error);
+                });
+        } else {
+            const newDreamRef = firebasePush(ref(db, "dreams"));
+            firebaseSet(newDreamRef, { ...newDream, id: newDreamRef.key })
+                .then(() => {
+                    setDreamEntries((prevEntries) => [...prevEntries, { ...newDream, id: newDreamRef.key }]);
+                    setNewDreamNotifications((prevNotifications) => [...prevNotifications, { ...newDream, id: newDreamRef.key }]);
+                })
+                .catch((error) => {
+                    console.error("Error adding new dream to Firebase:", error);
+                });
+        }
     };
 
     return (
@@ -64,7 +86,9 @@ export function App(props) {
                      element={<DreamDiary 
                                 dreamEntries={dreamEntries} 
                                 newDreamNotifications={newDreamNotifications} 
-                                setNewDreamNotifications={setNewDreamNotifications}/>} />
+                                setNewDreamNotifications={setNewDreamNotifications}
+                                setDreamEntries={setDreamEntries}/>}
+                                 />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>
             </main>
