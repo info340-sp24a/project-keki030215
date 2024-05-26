@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-import { NavigationBar } from "./NavigationBar"
+import { getDatabase, ref, onValue, set as firebaseSet, push as firebasePush } from 'firebase/database';
+import { NavigationBar } from './NavigationBar';
 import { DreamDiary } from './DreamDiaryPage';
 import { Main } from './Main';
 import { Profile } from './Profile';
@@ -20,13 +20,35 @@ const app = initializeApp(firebaseConfig);
 
 export function App(props) {
 
-    const [dreamEntries, setDreamEntries] = useState([]); // save for future updating entries
+    const db = getDatabase();
+    const [dreamEntries, setDreamEntries] = useState([]);
     const [newDreamNotifications, setNewDreamNotifications] = useState([])
 
+    useEffect(() => {
+        const dreamsRef = ref(db, 'dreams');
+        onValue(dreamsRef, (snapshot) => {
+            const dreams = snapshot.val();
+            const loadedDreams = [];
+            for (const key in dreams) {
+                loadedDreams.push({
+                    id: key,
+                    ...dreams[key]
+                });
+            }
+            setDreamEntries(loadedDreams);
+        });
+    }, [db]);
+
     const addDreamEntry = (newDream) => {
-        setDreamEntries(prevEntries => [...prevEntries, newDream]);
-        setNewDreamNotifications(prevNotifications => [...prevNotifications, newDream]);
-        console.log("A new dream is added:", newDream);
+        const newDreamRef = firebasePush(ref(db, "dreams"));
+        firebaseSet(newDreamRef, newDream)
+        .then(function() {
+            setDreamEntries((prevEntries) => [...prevEntries, { ...newDream, id: newDreamRef.key }]);
+            setNewDreamNotifications((prevNotifications) => [...prevNotifications, { ...newDream, id: newDreamRef.key }]);
+        })
+        .catch(function(error) {
+            console.error("Error adding new dream to Firebase:", error);
+        });
     };
 
     return (

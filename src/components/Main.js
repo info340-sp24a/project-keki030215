@@ -7,7 +7,7 @@ export function Main(props) {
     const [showNoInputModal, setShowNoInputModal] = useState(false);
     const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = function(event) {
         event.preventDefault();
         setDreamText("");
         if (dreamText.trim() === "") {
@@ -16,6 +16,10 @@ export function Main(props) {
             const newDream = {
                 date: new Date().toLocaleDateString("en-US"),
                 entry: dreamText,
+                title: "",
+                dreamType: "normal",
+                tags: [],
+                image: ""
             };
             addDreamEntry(newDream);
             setShowSubmissionModal(true);

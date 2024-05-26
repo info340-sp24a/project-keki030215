@@ -23,12 +23,31 @@ export function DreamDiary(props) {
         return transformed;
     });
 
-    const handleClick = (event) => {
+    function handleClick(event) {
         setOpen(!open);
         const entryName = event.target.name;
         setSelectedDream(entryName);
     }
 
+    function handleNotificationClick(dream, index) {
+        return function() {
+            const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
+            setNewDreamNotifications(updatedNotifications);
+            setCurrentDream(dream);
+            setShowEditModal(true);
+        };
+    };
+    
+    function handleEditSave(updatedDream) {
+        setNewDreamNotifications((prevNotifications) =>
+            prevNotifications.filter((notification) => notification.id !== updatedDream.id)
+        );
+        setShowEditModal(false);
+    }
+
+    function handleClose() {
+        setShowEditModal(false);
+    }
     function handleNotificationClick(index) {
         alert(`New dream added: ${newDreamNotifications[index].entry}`);
         const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
@@ -106,6 +125,21 @@ export function DreamDiary(props) {
                         </button>
                     );
                 })}
+                {newDreamNotifications.map((dream, index) => (
+                    <button 
+                        aria-label="Check New Dream"
+                        key={index} 
+                        className="notification-button" 
+                        onClick={handleNotificationClick(dream, index)}>
+                        New Dream Added - Click to View!
+                    </button>
+                ))}
+                <EditDreamModal 
+                    show={showEditModal} 
+                    onHide={handleClose} 
+                    dream={currentDream}
+                    onSave={handleEditSave}
+                />
             </div>
 
             <div className="search-area">
