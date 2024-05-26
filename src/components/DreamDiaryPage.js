@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Collapse from "react-bootstrap/Collapse";
 import { EditDreamModal } from "./EditDreamModal";
@@ -19,8 +19,15 @@ export function DreamDiary(props) {
     const { dreamEntries, newDreamNotifications, setNewDreamNotifications, setDreamEntries } = props;
     const [open, setOpen] = useState(false);
     const [selectedDream, setSelectedDream] = useState("");
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [currentDream, setCurrentDream] = useState({});
+    const [combinedEntries, setCombinedEntries] = useState([...initialDreamEntries]);
 
-    const dreamEntryArray = initialDreamEntries.map((dreamEntry) => {
+    useEffect(() => {
+        setCombinedEntries([...initialDreamEntries, ...dreamEntries]);
+    }, [dreamEntries]);
+
+    const dreamEntryArray = combinedEntries.map((dreamEntry) => {
         const transformed = <DreamCard dreamData={dreamEntry} key={dreamEntry.id} />
         return transformed;
     });
@@ -85,14 +92,14 @@ export function DreamDiary(props) {
             }
         }
 
-        const tagArray = dreamData.tags.map((tag) => {
+        const tagArray = (dreamData.tags || []).map((tag) => {
             const transformed = (
                 <div key={tag} className="dream-tag card">
                     {tag}
                 </div>
-            )
-            return transformed
-        })
+            );
+            return transformed;
+        });
 
         return (
             <div className={dreamClassName}>

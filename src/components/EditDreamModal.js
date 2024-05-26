@@ -14,7 +14,7 @@ export function EditDreamModal({ show, onHide, dream, onSave }) {
         entry: dream.entry || "",
         dreamType: dream.dreamType || "normal",
         tags: dream.tags || [],
-        image: dream.image || null,
+        img: dream.img || null,
         id: dream.id || null
     });
 
@@ -24,7 +24,7 @@ export function EditDreamModal({ show, onHide, dream, onSave }) {
             entry: dream.entry || "",
             dreamType: dream.dreamType || "normal",
             tags: dream.tags || [],
-            image: dream.image || null,
+            img: dream.img || null,
             id: dream.id || null
         });
     }, [dream]);
@@ -52,7 +52,7 @@ export function EditDreamModal({ show, onHide, dream, onSave }) {
                 return getDownloadURL(imageRef);
             })
             .then((downloadURL) => {
-                setEditedDream((prev) => ({ ...prev, image: downloadURL }));
+                setEditedDream((prev) => ({ ...prev, img: downloadURL }));
                 console.log("Image uploaded and URL is:", downloadURL);
             })
         }
@@ -60,8 +60,8 @@ export function EditDreamModal({ show, onHide, dream, onSave }) {
 
     const handleSaveClick = () => {
         console.log("Saving these tags to Firebase:", editedDream.tags);
-        if (!editedDream.image) {
-            editedDream.image = "img/no-img-dream.jpeg";
+        if (!editedDream.img) {
+            editedDream.img = "img/no-img-dream.jpeg";
         }
         onSave(editedDream);
         onHide();
@@ -124,8 +124,8 @@ export function EditDreamModal({ show, onHide, dream, onSave }) {
                                     type="file"
                                     onChange={handleImageChange}
                                 />
-                                {editedDream.image && 
-                                <img src={editedDream.image} 
+                                {editedDream.img && 
+                                <img src={editedDream.img} 
                                 alt="Dream" 
                                 style={{ width: '100%', marginTop: '10px' }} />}
                             </Form.Group>

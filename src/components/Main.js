@@ -19,7 +19,7 @@ export function Main(props) {
                 title: "",
                 dreamType: "normal",
                 tags: [],
-                image: "img/no-img-dream.jpeg"
+                img: "img/no-img-dream.jpeg"
             };
             addDreamEntry(newDream);
             setShowSubmissionModal(true);
