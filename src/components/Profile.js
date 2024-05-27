@@ -30,10 +30,6 @@ export function Profile(props) {
         navigate('/dream-diary');
     }
 
-    function goToCorkboard() {
-        navigate('/corkboard');
-    }
-
     if (!user) {
         return <p>Loading...</p>;
     }
@@ -53,11 +49,6 @@ export function Profile(props) {
                 <div className="col-md-4">
                     <div className="box profile-sub-bg text-white p-3 mb-3">
                         <button className="btn btn-light btn-lg" type="button" aria-label="Dream Diary" onClick={goToDreamDiary}>MY DIARY</button>
-                    </div>
-                </div>
-                <div className="col-md-4">
-                    <div className="box profile-sub-bg text-white p-3 mb-3">
-                        <button className="btn btn-light btn-lg" type="button" aria-label="Corkboard" onClick={goToCorkboard}>MY BOARD</button>
                     </div>
                 </div>
             </div>
