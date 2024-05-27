@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { NoInputModal, SubmissionModal } from './MainModal';
 
 export function Main(props) {
-    const { addDreamEntry } = props;
+    const { currentUser, addDreamEntry } = props;
     const [dreamText, setDreamText] = useState("");
     const [showNoInputModal, setShowNoInputModal] = useState(false);
     const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
     const handleSubmit = function(event) {
         event.preventDefault();
+        if (!currentUser) {
+            alert("You must be logged in to submit a dream. :-(");
+            return;
+        }
         setDreamText("");
         if (dreamText.trim() === "") {
             setShowNoInputModal(true);

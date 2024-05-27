@@ -1,9 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import Collapse from "react-bootstrap/Collapse";
 import { EditDreamModal } from "./EditDreamModal";
-import { getDatabase, ref, update as firebaseUpdate } from "firebase/database";
+import { getDatabase, ref, onValue, update as firebaseUpdate } from "firebase/database";
 
 const initialDreamEntries = [
     {id:"sample1", date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
@@ -16,7 +15,7 @@ const initialDreamEntries = [
 ]
 
 export function DreamDiary(props) {
-    const { dreamEntries, newDreamNotifications, setNewDreamNotifications, setDreamEntries } = props;
+    const { newDreamNotifications, setNewDreamNotifications, setDreamEntries, currentUser } = props;
     const [open, setOpen] = useState(false);
     const [selectedDream, setSelectedDream] = useState("");
     const [showEditModal, setShowEditModal] = useState(false);
@@ -24,13 +23,25 @@ export function DreamDiary(props) {
     const [combinedEntries, setCombinedEntries] = useState([...initialDreamEntries]);
 
     useEffect(() => {
-        setCombinedEntries([...initialDreamEntries, ...dreamEntries]);
-    }, [dreamEntries]);
-
-    const dreamEntryArray = combinedEntries.map((dreamEntry) => {
-        const transformed = <DreamCard dreamData={dreamEntry} key={dreamEntry.id} />
-        return transformed;
-    });
+        if (currentUser) {
+            const db = getDatabase();
+            const userDreamsRef = ref(db, `dreams/${currentUser.uid}`);
+            const unsubscribe = onValue(userDreamsRef, (snapshot) => {
+                const dreams = snapshot.val() || {};
+                const loadedDreams = Object.keys(dreams).map((key) => ({
+                    id: key,
+                    ...dreams[key]
+                }));
+                setDreamEntries(loadedDreams);
+                setCombinedEntries([...initialDreamEntries, ...loadedDreams]);
+            });
+    
+            return () => unsubscribe();
+        } else {
+            setCombinedEntries([...initialDreamEntries]);
+            setDreamEntries([]);
+        }
+    }, [setDreamEntries, currentUser]);
 
     function handleClick(event) {
         setOpen(!open);
@@ -49,7 +60,7 @@ export function DreamDiary(props) {
     
     function handleEditSave(updatedDream) {
         const db = getDatabase();
-        const dreamRef = ref(db, `dreams/${updatedDream.id}`);
+        const dreamRef = ref(db, `dreams/${currentUser.uid}/${updatedDream.id}`);
         firebaseUpdate(dreamRef, updatedDream)
             .then(() => {
                 setNewDreamNotifications((prevNotifications) =>
@@ -64,7 +75,7 @@ export function DreamDiary(props) {
                 }));                
                 setShowEditModal(false);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error("Error updating dream in Firebase:", error);
             });
     }
@@ -72,11 +83,6 @@ export function DreamDiary(props) {
     function handleClose() {
         setShowEditModal(false);
     }
-    function handleNotificationClick(index) {
-        alert(`New dream added: ${newDreamNotifications[index].entry}`);
-        const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
-        setNewDreamNotifications(updatedNotifications);
-    };
 
     function DreamCard(props) {
         const {dreamData} = props;
@@ -92,9 +98,9 @@ export function DreamDiary(props) {
             }
         }
 
-        const tagArray = (dreamData.tags || []).map((tag) => {
+        const tagArray = (dreamData.tags || []).map((tag, index) => {
             const transformed = (
-                <div key={tag} className="dream-tag card">
+                <div key={index} className="dream-tag card">
                     {tag}
                 </div>
             );
@@ -138,17 +144,6 @@ export function DreamDiary(props) {
     return (
         <div>
             <div className="mt-2 d-flex notifications align-items-center justify-content-center">
-                {newDreamNotifications.map(function(dream, index) {
-                    return (
-                        <button 
-                         key={index} 
-                         className="notification-button" 
-                         aria-label="view new dream"
-                         onClick={function() { handleNotificationClick(index); }}>
-                         New Dream Added - Click to View!
-                        </button>
-                    );
-                })}
                 {newDreamNotifications.map((dream, index) => (
                     <button 
                         aria-label="Check New Dream"
@@ -163,6 +158,7 @@ export function DreamDiary(props) {
                     onHide={handleClose} 
                     dream={currentDream}
                     onSave={handleEditSave}
+                    currentUser={currentUser}
                 />
             </div>
 
@@ -179,7 +175,9 @@ export function DreamDiary(props) {
             <section>
                 <div className="container">
                     <div className="row d-flex justify-content-evenly">
-                        { dreamEntryArray }
+                    {combinedEntries.map((dream) => (
+                        <DreamCard key={dream.id} dreamData={dream} />
+                    ))}
                     </div>
                 </div>
             </section>

@@ -7,7 +7,8 @@ import { Row } from 'react-bootstrap';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
-export function EditDreamModal({ show, onHide, dream, onSave }) {
+export function EditDreamModal(props) {
+    const { currentUser, show, onHide, dream, onSave } = props;
 
     const [editedDream, setEditedDream] = useState({
         title: dream.title || "",
@@ -59,7 +60,10 @@ export function EditDreamModal({ show, onHide, dream, onSave }) {
     };
 
     const handleSaveClick = () => {
-        console.log("Saving these tags to Firebase:", editedDream.tags);
+        if (!currentUser) {
+            alert("You are not signed in, your dream CANNOT save permenantly :-(");
+            return;
+        }
         if (!editedDream.img) {
             editedDream.img = "img/no-img-dream.jpeg";
         }

@@ -6,6 +6,7 @@ import { DreamDiary } from './DreamDiaryPage';
 import { Main } from './Main';
 import { Profile } from './Profile';
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCIVvi-jplzgCBjon9pl5T53wAZHulnktU",
@@ -16,32 +17,46 @@ const firebaseConfig = {
     appId: "1:456913610476:web:e6e196947240c2644627c9"
   };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 export function App(props) {
 
     const db = getDatabase();
     const [dreamEntries, setDreamEntries] = useState([]);
     const [newDreamNotifications, setNewDreamNotifications] = useState([])
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
-        const dreamsRef = ref(db, 'dreams');
-        onValue(dreamsRef, (snapshot) => {
-            const dreams = snapshot.val();
-            const loadedDreams = [];
-            for (const key in dreams) {
-                loadedDreams.push({
-                    id: key,
-                    ...dreams[key]
-                });
+        const auth = getAuth();
+        onAuthStateChanged(auth, (firebaseUserObj) => {
+            setCurrentUser(firebaseUserObj);
+            if (currentUser) {
+                const dreamsRef = ref(db, `dreams/${currentUser.uid}`);
+            onValue(dreamsRef, (snapshot) => {
+                const dreams = snapshot.val();
+                const loadedDreams = [];
+                for (const key in dreams) {
+                    loadedDreams.push({
+                        id: key,
+                        ...dreams[key]
+                    });
+                }
+                setDreamEntries(loadedDreams);
+            });
+            } else {
+                setDreamEntries([]);
             }
-            setDreamEntries(loadedDreams);
         });
-    }, [db]);
+    }, [db, currentUser]);
 
     const addDreamEntry = (newDream) => {
+        if (!currentUser) {
+            console.log("No user signed in!");
+            alert("You must be logged in to save dreams. :-(");
+            return;
+        }
         if (newDream.id) {
-            const dreamRef = ref(db, `dreams/${newDream.id}`);
+            const dreamRef = ref(db, `dreams/${currentUser.uid}`);
             firebaseUpdate(dreamRef, newDream)
                 .then(() => {
                     setDreamEntries((prevEntries) =>
@@ -61,7 +76,7 @@ export function App(props) {
                     console.error("Error updating dream in Firebase:", error);
                 });
         } else {
-            const newDreamRef = firebasePush(ref(db, "dreams"));
+            const newDreamRef = firebasePush(ref(db, `dreams/${currentUser.uid}`));
             firebaseSet(newDreamRef, { ...newDream, id: newDreamRef.key })
                 .then(() => {
                     setDreamEntries((prevEntries) => [...prevEntries, { ...newDream, id: newDreamRef.key }]);
@@ -81,13 +96,14 @@ export function App(props) {
 
             <main>
                 <Routes>
-                    <Route path="/" element={<Main addDreamEntry={addDreamEntry}/>} />
+                    <Route path="/" element={<Main addDreamEntry={addDreamEntry} currentUser={currentUser}/>} />
                     <Route path="/dream-diary" 
                      element={<DreamDiary 
                                 dreamEntries={dreamEntries} 
                                 newDreamNotifications={newDreamNotifications} 
                                 setNewDreamNotifications={setNewDreamNotifications}
-                                setDreamEntries={setDreamEntries}/>}
+                                setDreamEntries={setDreamEntries}
+                                currentUser={currentUser}/>}
                                  />
                     <Route path="/profile" element={<Profile />} />
                 </Routes>
