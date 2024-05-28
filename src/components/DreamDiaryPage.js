@@ -103,7 +103,7 @@ export function DreamDiary(props) {
         } else {
             const filterWords = inputtedText.toLowerCase();
             const filteredTitles = combinedEntries.filter((entry) => {
-                if ((entry.title.toLowerCase().includes(filterWords)) ||( entry.tags.includes(filterWords))) {
+                if (entry.title.toLowerCase().includes(filterWords)) {
                     return entry
                 }
             })
