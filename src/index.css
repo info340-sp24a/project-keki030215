@@ -182,7 +182,7 @@ label {
 .dream-title {
     text-align: center;
     font-weight: bold;
-    color: black;
+    color: rgb(0, 0, 0);
 }
 
 .dream-date {
@@ -192,6 +192,7 @@ label {
 
 .dream-entry-text {
     padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.748);
 }
 
 .normal-dream {
@@ -206,15 +207,23 @@ label {
     background-color: rgb(180, 125, 217);
 }
 
-.dream-entry button {
-    background-color: lightgray;
-    color: black;
+.view-dream-button {
+    mix-blend-mode: hard-light;
     border-radius: 5px;
     position: absolute;
     right: 1rem;
 }
 
+.edit-dream-button {
+    background-color: rgb(252, 252, 252);
+    color: black;   
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 .dream-tag {
+    mix-blend-mode: hard-light;
     width: auto;
 }
 
@@ -232,15 +241,6 @@ label {
 .dream-description {
     padding: 1rem;
 }
-
-.tag-button {
-    background-color: lightgray !important;
-    color: black !important;
-    position: relative;
-    bottom: 0;
-    margin-bottom: 1rem;
-}
-
 
 
 

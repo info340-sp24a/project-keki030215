@@ -42,7 +42,7 @@ export function SubmissionModal({ show, onHide, title }) {
 
     useEffect(function setupAutoClose() {
         if (show) {
-            const timer = setTimeout(onHide, 5000);
+            const timer = setTimeout(onHide, 10000);
             return function cleanup() {
                 clearTimeout(timer);
             };
