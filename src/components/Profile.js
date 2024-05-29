@@ -34,13 +34,12 @@ export function Profile(props) {
     function handleSignOut() {
         setIsSigningOut(true);
         signOut(auth).then(() => {
-            // Sign-out successful.
-            setUser(null); // Clear user state
-            navigate('/'); // Redirect to home page
+            setUser(null);
+            navigate('/');
         }).catch((error) => {
             console.error('Error during sign-out:', error);
         }).finally(() => {
-            setIsSigningOut(false); // Reset sign-out state
+            setIsSigningOut(false);
         });
     }
 
