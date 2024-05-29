@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'firebase/auth';
 
 export function Profile(props) {
     const [user, setUser] = useState(null);
+    const [isSigningOut, setIsSigningOut] = useState(false);
     const navigate = useNavigate();
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -12,7 +13,7 @@ export function Profile(props) {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
-            } else {
+            } else if (!isSigningOut) {
                 signInWithPopup(auth, provider)
                     .then((result) => {
                         setUser(result.user);
@@ -24,14 +25,31 @@ export function Profile(props) {
         });
 
         return () => unsubscribe();
-    }, [auth, provider]);
+    }, [auth, provider, isSigningOut]);
 
     function goToDreamDiary() {
         navigate('/dream-diary');
     }
 
-    if (!user) {
-        return <p>Loading...</p>;
+    function handleSignOut() {
+        setIsSigningOut(true);
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            setUser(null); // Clear user state
+            navigate('/'); // Redirect to home page
+        }).catch((error) => {
+            console.error('Error during sign-out:', error);
+        }).finally(() => {
+            setIsSigningOut(false); // Reset sign-out state
+        });
+    }
+
+    if (!user && !isSigningOut) {
+        return (
+            <div className="container profile-text d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <h1>Not signed in</h1>
+            </div>
+        );
     }
 
     return (
@@ -46,9 +64,12 @@ export function Profile(props) {
             </div>
 
             <div className="row d-flex justify-content-center">
-                <div className="col-md-4">
-                    <div className="box profile-sub-bg text-white p-3 mb-3">
-                        <button className="btn btn-light btn-lg" type="button" aria-label="Dream Diary" onClick={goToDreamDiary}>MY DIARY</button>
+                <div className="col-md-8">
+                    <div className="box profile-sub-bg text-white p-3 mb-3 d-flex justify-content-center">
+                        <div className="btn-group">
+                            <button className="btn btn-light btn-lg" type="button" aria-label="Dream Diary" onClick={goToDreamDiary}>MY DIARY</button>
+                            <button className="btn btn-light btn-lg ms-2" type="button" aria-label="Sign Out" onClick={handleSignOut}>SIGN OUT</button>
+                        </div>
                     </div>
                 </div>
             </div>
