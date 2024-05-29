@@ -102,16 +102,27 @@ label {
     margin: 0 20px
 }
 
+.date-filter {
+    margin-right: 20px;
+}
+
 .search-area input {
     background-color: rgb(236, 244, 247);
     border-radius: 10px;
     text-align: center;
 }
 
-.search-area button {
+.search-area .search-button {
     background-color: antiquewhite;
     border-radius: 10px;
     margin-top: 10px;
+}
+
+.search-area .filter-button {
+    margin-top: 10px;
+    background-color: antiquewhite !important;
+    color: black !important;
+    border-color: black !important;
 }
 
 .dream-title {
@@ -327,6 +338,6 @@ footer {
 @media (min-width: 1400px) {
     /* Form Styling */
     form {
-        padding: 2rem 30.5rem 0;
+        padding: 2rem 5rem 0;
     }
 }

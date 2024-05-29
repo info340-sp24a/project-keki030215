@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import { EditDreamModal } from "./EditDreamModal";
 import { getDatabase, ref, onValue, update as firebaseUpdate } from "firebase/database";
+import { Dropdown } from "react-bootstrap";
 
 const initialDreamEntries = [/*
     {id:"sample1", date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
@@ -22,6 +23,7 @@ export function DreamDiary(props) {
     const [currentDream, setCurrentDream] = useState({});
     const [combinedEntries, setCombinedEntries] = useState([...initialDreamEntries]);
     const [inputtedText, setInputtedText] = useState('');
+    const [inputtedDate, setInputtedDate] = useState('');
     const [filteredEntries, setFilteredEntries] = useState([]);
 
     useEffect(() => {
@@ -92,9 +94,15 @@ export function DreamDiary(props) {
         setShowEditModal(true);
     }
 
-    const handleChange = (event) => {
+    const handleTextChange = (event) => {
         const typedValue = event.target.value;
         setInputtedText(typedValue);
+    }
+
+    const handleDateChange = (event) => {
+        const typedValue = event.target.value;
+        setInputtedDate(typedValue);
+        console.log(typedValue);
     }
 
     const handleSearch = (event) => {
@@ -103,11 +111,19 @@ export function DreamDiary(props) {
         } else {
             const filterWords = inputtedText.toLowerCase();
             const filteredTitles = combinedEntries.filter((entry) => {
-                if (entry.title.toLowerCase().includes(filterWords)) {
+                if (entry.title.toLowerCase().includes(filterWords) || ((entry.tags != undefined) && entry.tags.includes(filterWords))) {
+                    console.log(entry.tags);
                     return entry
                 }
             })
             setFilteredEntries(filteredTitles);
+        }
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            handleSearch();
         }
     }
 
@@ -156,7 +172,7 @@ export function DreamDiary(props) {
                                 <img className="dream-entry-img" src={dreamData.img} alt={dreamData.title} />
                             </div>
                         </div>
-                        <div className="mt-2 d-flex align-items-center justify-content-center">
+                        <div className="d-flex align-items-center justify-content-center">
                         <button 
                             aria-label="Check New Dream"
                             className="edit-dream-button"
@@ -198,11 +214,12 @@ export function DreamDiary(props) {
                 />
             </div>
 
-            <div className="search-area">
+            <div className="search-area d-flex justify-content-center">
                 <form>
                     <label htmlFor="searchbar">Search for a dream:</label>
-                    <input type="text" className="search-bar" id="searchbar" name="Search Bar" value={inputtedText} onChange={handleChange} placeholder="Search for a dream" />
-                    <button type="button" aria-label="Search" onClick={handleSearch} >Search</button>
+                    <input type="text" className="search-bar" id="searchbar" name="Search Bar" value={inputtedText} onChange={handleTextChange} placeholder="Search for a dream" onKeyDown={handleKeyDown} />
+                    <input type="date" className="date-filter" id="date-filter" name="Date Filter" value={inputtedDate} onChange={handleDateChange} onKeyDown={handleKeyDown} />
+                    <button type="button" className="search-button" aria-label="Search" onClick={handleSearch} >Search</button>
                 </form>
                 
             </div>
