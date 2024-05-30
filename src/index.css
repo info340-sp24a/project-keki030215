@@ -125,12 +125,18 @@ label {
     border-color: black !important;
 }
 
-.dream-title {
+.dream-title, .dream-type {
     text-align: center;
     font-weight: bold;
     color: rgb(0, 0, 0);
 }
 
+.dream-type {
+    background-color: rgba(255, 255, 255, 0.719);
+    mix-blend-mode: hard-light;
+    border-radius: 5px;
+    margin-top: 20px;
+}
 .dream-date {
     font-weight: bold;
     color: black;
@@ -175,7 +181,6 @@ label {
 
 .dream-entry {
     padding: 1rem;
-    padding-bottom: 50px;
 }
 
 .dream-entry-img {
@@ -338,6 +343,6 @@ footer {
 @media (min-width: 1400px) {
     /* Form Styling */
     form {
-        padding: 2rem 5rem 0;
+        padding: 2rem 0rem 0;
     }
 }

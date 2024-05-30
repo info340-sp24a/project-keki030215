@@ -107,7 +107,7 @@ export function EditDreamModal(props) {
                                     value={editedDream.dreamType}
                                     onChange={handleChange}
                                 >
-                                    <option value="normal">Normal</option>
+                                    <option value="normal">Normal Dream</option>
                                     <option value="nightmare">Nightmare</option>
                                     <option value="lucid">Lucid</option>
                                 </Form.Select>

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import { EditDreamModal } from "./EditDreamModal";
 import { getDatabase, ref, onValue, update as firebaseUpdate } from "firebase/database";
-import { Dropdown } from "react-bootstrap";
 
 const initialDreamEntries = [/*
     {id:"sample1", date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
@@ -102,22 +101,38 @@ export function DreamDiary(props) {
     const handleDateChange = (event) => {
         const typedValue = event.target.value;
         setInputtedDate(typedValue);
-        console.log(typedValue);
     }
 
     const handleSearch = (event) => {
-        if (inputtedText == "") {
+        const year = inputtedDate.slice(0, 4);
+        const month = inputtedDate.slice(5, 7);
+        const day = inputtedDate.slice(8, 10);
+        const rearrangedDate = (month + "-" + day + "-" + year);
+
+        if (inputtedText == "" && rearrangedDate == "--") {
             setFilteredEntries(combinedEntries);
         } else {
             const filterWords = inputtedText.toLowerCase();
             const filteredTitles = combinedEntries.filter((entry) => {
                 if (entry.title.toLowerCase().includes(filterWords) || ((entry.tags != undefined) && entry.tags.includes(filterWords))) {
-                    console.log(entry.tags);
                     return entry
                 }
             })
-            setFilteredEntries(filteredTitles);
+
+            const inputDate = Date.parse(rearrangedDate);
+            const filteredDates = filteredTitles.filter((entry) => {
+                const entryDate = Date.parse(entry.date);
+                if (inputDate == entryDate) {
+                    return entry
+                }
+            })
+
+            setFilteredEntries(filteredDates);
         }
+    }
+
+    const handleDropdownClick = (event) => {
+        console.log(event.target.value);
     }
 
     const handleKeyDown = (event) => {
@@ -154,7 +169,7 @@ export function DreamDiary(props) {
             <div className={dreamClassName}>
                 <div>
                     <p className="dream-date">
-                        {dreamData.date}
+                        {dreamData.date}                        
                         <button type="button" className="view-dream-button" name={dreamData.title} id={dreamData.id} onClick={handleClick} aria-label="View Dream">View Dream</button>
                     </p>
                 </div>
@@ -188,6 +203,7 @@ export function DreamDiary(props) {
                         {tagArray}
                     </div>
                 </div>
+                <div><p className="dream-type">{dreamData.dreamType + " dream"}</p></div>
             </div>
         )
         
@@ -221,9 +237,7 @@ export function DreamDiary(props) {
                     <input type="date" className="date-filter" id="date-filter" name="Date Filter" value={inputtedDate} onChange={handleDateChange} onKeyDown={handleKeyDown} />
                     <button type="button" className="search-button" aria-label="Search" onClick={handleSearch} >Search</button>
                 </form>
-                
             </div>
-
 
             <section>
                 <div className="container">
