@@ -108,7 +108,6 @@ export function DreamDiary(props) {
         const month = inputtedDate.slice(5, 7);
         const day = inputtedDate.slice(8, 10);
         const rearrangedDate = (month + "-" + day + "-" + year);
-
         if (inputtedText == "" && rearrangedDate == "--") {
             setFilteredEntries(combinedEntries);
         } else {
@@ -118,15 +117,17 @@ export function DreamDiary(props) {
                     return entry
                 }
             })
-
             const inputDate = Date.parse(rearrangedDate);
             const filteredDates = filteredTitles.filter((entry) => {
                 const entryDate = Date.parse(entry.date);
-                if (inputDate == entryDate) {
+                if (rearrangedDate != "--") {
+                    if (inputDate == entryDate) {
+                        return entry
+                    }
+                } else {
                     return entry
                 }
             })
-
             setFilteredEntries(filteredDates);
         }
     }
