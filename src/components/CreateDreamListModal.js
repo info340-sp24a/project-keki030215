@@ -9,6 +9,10 @@ function CreateDreamListModal(props) {
     const [listName, setListName] = useState("");
 
     const handleSave = () => {
+        if (!currentUser) {
+                alert("You must be logged in to create a dream list.");
+                return;
+        }
         if (!listName.trim()) {
             alert("Please enter a name for the dream list.");
             return;
