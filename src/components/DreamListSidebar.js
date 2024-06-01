@@ -44,6 +44,13 @@ function DreamListSidebar(props) {
         }
     }, [currentUser]);
 
+    const handleFilterClick = (listId) => {
+        setFilteredListId(listId);
+        if (props.onSelectList) {
+            props.onSelectList(listId);
+        }
+    };
+
     const handleToggleDreamsVisibility = (listId) => {
         setDreamLists((currentLists) => {
             const updatedLists = [];
@@ -75,6 +82,7 @@ function DreamListSidebar(props) {
             firebaseUpdate(listRef, { id: dreamId, title: dreamToAdd.title })
                 .then(() => {
                     setAddDreamModalShow(false);
+                    console.log(filteredListId);
                 })
                 .catch((error) => {
                     console.log("Error adding dream to list:", error);
@@ -138,7 +146,7 @@ function DreamListSidebar(props) {
                             </Button>
                             <Button 
                              variant="warning" size="sm" className="col-md-4"
-                             onClick={() => setFilteredListId(list.id)}
+                             onClick={() => handleFilterClick(list.id)}
                              aria-label="Filter dream in the list">
                                 Filter
                             </Button>

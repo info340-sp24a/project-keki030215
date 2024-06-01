@@ -17,6 +17,7 @@ export function DreamDiary(props) {
     const [inputtedText, setInputtedText] = useState('');
     const [inputtedDate, setInputtedDate] = useState('');
     const [filteredEntries, setFilteredEntries] = useState([]);
+    const [selectedListId, setSelectedListId] = useState(null);
 
 
     useEffect(() => {
@@ -40,6 +41,27 @@ export function DreamDiary(props) {
             setDreamEntries([]);
         }
     }, [setDreamEntries, currentUser]);
+
+    useEffect(() => {
+        if (selectedListId) {
+            const db = getDatabase();
+            const listRef = ref(db, `dreamLists/${currentUser.uid}/${selectedListId}/dreams`);
+            onValue(listRef, (snapshot) => {
+                const dreamIds = snapshot.val() || {};
+                setFilteredEntries([]);
+    
+                Object.keys(dreamIds).forEach((dreamId) => {
+                    const dreamRef = ref(db, `dreams/${currentUser.uid}/${dreamId}`);
+                    onValue(dreamRef, (dreamSnap) => {
+                        const dreamData = { id: dreamSnap.key, ...dreamSnap.val() };
+                        setFilteredEntries(prevEntries => [...prevEntries, dreamData]);
+                    });
+                });
+            });
+        } else {
+            setFilteredEntries(combinedEntries);
+        }
+    }, [currentUser, selectedListId, combinedEntries]);
 
 
     function handleClick(event) {
@@ -108,21 +130,17 @@ export function DreamDiary(props) {
         } else {
             const filterWords = inputtedText.toLowerCase();
             const filteredTitles = combinedEntries.filter((entry) => {
-                if (entry.title.toLowerCase().includes(filterWords) || ((entry.tags !== undefined) && entry.tags.includes(filterWords))) {
-                    return entry
-                }
-            })
+                return entry.title.toLowerCase().includes(filterWords) || (entry.tags !== undefined && entry.tags.includes(filterWords));
+            });
             const inputDate = Date.parse(rearrangedDate);
             const filteredDates = filteredTitles.filter((entry) => {
                 const entryDate = Date.parse(entry.date);
                 if (rearrangedDate !== "--") {
-                    if (inputDate === entryDate) {
-                        return entry
-                    }
+                    return inputDate === entryDate;
                 } else {
-                    return entry
+                    return true;
                 }
-            })
+            });
             setFilteredEntries(filteredDates);
         }
     }
@@ -235,7 +253,7 @@ export function DreamDiary(props) {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-3">
-                            <DreamListSidebar currentUser={currentUser} />
+                            <DreamListSidebar currentUser={currentUser} onSelectList={setSelectedListId} />
                         </div>
                         <div className="col-md-9 justify-content-evenly">
                             <div className="row justify-content-evenly">
