@@ -224,6 +224,23 @@ label {
 }
 
 
+/* sidebar styling */
+.sidebar {
+    grid-area: sidebar;
+    background-color: rgb(255, 226, 196);
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+.sidebar-title {
+    font-size: xx-large;
+}
+
+.sidebar-paragraph {
+    font-size: medium;
+}
 
 
 /* Footer Styling */

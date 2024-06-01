@@ -3,16 +3,9 @@ import { useState, useEffect } from "react";
 import Collapse from "react-bootstrap/Collapse";
 import { EditDreamModal } from "./EditDreamModal";
 import { getDatabase, ref, onValue, update as firebaseUpdate } from "firebase/database";
+import DreamListSidebar from './DreamListSidebar';
 
-const initialDreamEntries = [/*
-    {id:"sample1", date:"April 7", title:"A Night in Amsterdam", dreamType:"normal", tags:["Normal Dream", "Family", "Nostalgic", "Realistic"], img:"img/amsterdam-night.jpg", entry:"I had a dream that I was in Amsterdam with my family. We ate food, took pictures, and spent long hours staring at the city lights at night"},
-
-    {id:"sample2", date:"April 9", title:"The Fog Approaches", dreamType:"nightmare", tags:["Nightmare Dream", "Scary", "Surreal"], img: "img/black-fog.jpg", entry:"I had a nightmare last night about the fog, a black, smokey-like mist that approached my house from all angles. It seeped through the bottom of the doorframe and engulfed me. I woke up as it covered my eyes."},
-
-    {id:"sample3", date:"April 10", title:"A Dream About my Great Uncle", dreamType:"normal", tags:["Normal Dream", "Family", "Bittersweet"], img: "img/great-uncle.jpg" , entry:"I had a dream where I was in my late great uncle's office in his grocery store. He was sitting on the couch at the far end of the room as he always did when relaxing and beckoned me over. We talked about how my life was and what I had planned for my future, culminating with him telling me how proud he was with how far I had come since his departure."},
-
-    {id:"sample4", date:"April 12", title:"Lucid Dream in Tanzinistra", dreamType:"lucid", tags:["Lucid Dream", "Fantasy"], img: "img/south-africa.jpg", entry: "I had a lucid dream in a fictitious world called Tanzinistra. Knowing it was a dream, I explored what it had to offer. I would finish this entry but I am too lazy."}*/
-]
+const initialDreamEntries = [];
 
 export function DreamDiary(props) {
     const { newDreamNotifications, setNewDreamNotifications, setDreamEntries, currentUser } = props;
@@ -24,6 +17,7 @@ export function DreamDiary(props) {
     const [inputtedText, setInputtedText] = useState('');
     const [inputtedDate, setInputtedDate] = useState('');
     const [filteredEntries, setFilteredEntries] = useState([]);
+
 
     useEffect(() => {
         if (currentUser) {
@@ -46,6 +40,7 @@ export function DreamDiary(props) {
             setDreamEntries([]);
         }
     }, [setDreamEntries, currentUser]);
+
 
     function handleClick(event) {
         setClose(!close);
@@ -108,20 +103,20 @@ export function DreamDiary(props) {
         const month = inputtedDate.slice(5, 7);
         const day = inputtedDate.slice(8, 10);
         const rearrangedDate = (month + "-" + day + "-" + year);
-        if (inputtedText == "" && rearrangedDate == "--") {
+        if (inputtedText === "" && rearrangedDate === "--") {
             setFilteredEntries(combinedEntries);
         } else {
             const filterWords = inputtedText.toLowerCase();
             const filteredTitles = combinedEntries.filter((entry) => {
-                if (entry.title.toLowerCase().includes(filterWords) || ((entry.tags != undefined) && entry.tags.includes(filterWords))) {
+                if (entry.title.toLowerCase().includes(filterWords) || ((entry.tags !== undefined) && entry.tags.includes(filterWords))) {
                     return entry
                 }
             })
             const inputDate = Date.parse(rearrangedDate);
             const filteredDates = filteredTitles.filter((entry) => {
                 const entryDate = Date.parse(entry.date);
-                if (rearrangedDate != "--") {
-                    if (inputDate == entryDate) {
+                if (rearrangedDate !== "--") {
+                    if (inputDate === entryDate) {
                         return entry
                     }
                 } else {
@@ -130,10 +125,6 @@ export function DreamDiary(props) {
             })
             setFilteredEntries(filteredDates);
         }
-    }
-
-    const handleDropdownClick = (event) => {
-        console.log(event.target.value);
     }
 
     const handleKeyDown = (event) => {
@@ -242,10 +233,17 @@ export function DreamDiary(props) {
 
             <section>
                 <div className="container">
-                    <div className="row d-flex justify-content-evenly">
-                        {filteredEntries.map((dream) => (
-                            <DreamCard key={dream.id} dreamData={dream} />
-                        ))}
+                    <div className="row">
+                        <div className="col-md-3">
+                            <DreamListSidebar currentUser={currentUser} />
+                        </div>
+                        <div className="col-md-9 justify-content-evenly">
+                            <div className="row justify-content-evenly">
+                                {filteredEntries.map((dream) => (
+                                    <DreamCard key={dream.id} dreamData={dream} />
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
