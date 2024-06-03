@@ -44,17 +44,18 @@ function DreamListSidebar(props) {
         }
     }, [currentUser]);
 
-    const handleFilterClick = (listId) => {
+    function handleFilterClick(listId) {
         setFilteredListId(listId);
         if (props.onSelectList) {
             props.onSelectList(listId);
         }
-    };
+    }
 
-    const handleToggleDreamsVisibility = (listId) => {
-        setDreamLists((currentLists) => {
+    function handleToggleDreamsVisibility(listId) {
+        setDreamLists(function(currentLists) {
             const updatedLists = [];
-            for (const list of currentLists) {
+            for (let i = 0; i < currentLists.length; i++) {
+                let list = currentLists[i];
                 if (list.id === listId) {
                     updatedLists.push({ ...list, visible: !list.visible });
                 } else {
@@ -63,14 +64,14 @@ function DreamListSidebar(props) {
             }
             return updatedLists;
         });
-    };
+    }
 
-    const handleOpenAddDreams = (listId) => {
+    function handleOpenAddDreams(listId) {
         setCurrentListId(listId);
         setAddDreamModalShow(true);
-    };
+    }
 
-    const handleAddDreamToList = (dreamId) => {
+    function handleAddDreamToList(dreamId) {
         if (currentListId && dreamId) {
             const db = getDatabase();
             const dreamToAdd = allDreams[dreamId];
@@ -90,45 +91,41 @@ function DreamListSidebar(props) {
         }
     };
 
-    const dreamListsArray = dreamLists.map((list, index) => {
-        <Accordion.Item eventKey={String(index)} key={list.id}>
+    const accordionItems = dreamLists.map((list) => (
+        <Accordion.Item eventKey={String(list.id)} key={list.id}>
             <Accordion.Header onClick={() => handleToggleDreamsVisibility(list.id)}>{list.name}</Accordion.Header>
             <Accordion.Body>
             <ul>
-                {(() => {
-                    const dreams = list.dreams;
-                    let dreamElements = [];
+                            {(() => {
+                                const dreams = list.dreams;
+                                let dreamElements = [];
 
-                    if (dreams && Object.keys(dreams).length > 0) {
-                        for (const key in dreams) {
-                            if (dreams.hasOwnProperty(key)) {
-                                const dream = dreams[key];
-                                dreamElements.push(<li key={dream.id}>{dream.title}</li>);
-                            }
-                        }
-                    } else {
-                        dreamElements.push(<li key="no-dreams">You did not add any dreams yet...</li>);
-                    }
+                                if (dreams && Object.keys(dreams).length > 0) {
+                                    for (const key in dreams) {
+                                        if (dreams.hasOwnProperty(key)) {
+                                            const dream = dreams[key];
+                                            dreamElements.push(<li key={dream.id}>{dream.title}</li>);
+                                        }
+                                    }
+                                } else {
+                                    dreamElements.push(<li key="no-dreams">You did not add any dreams yet...</li>);
+                                }
 
-                    return dreamElements;
-                })()}
-            </ul>
-            <div className="row">
-                <Button variant="info" className="col-md-7 me-2"
-                 onClick={() => handleOpenAddDreams(list.id)}
-                 aria-label="add dream to the dream list">
-                    Add Dreams
-                </Button>
-                <Button 
-                 variant="warning" size="sm" className="col-md-4"
-                 onClick={() => handleFilterClick(list.id)}
-                 aria-label="Filter dream in the list">
-                    Filter
-                </Button>
-            </div>
+                                return dreamElements;
+                            })()}
+                        </ul>
+                <div className="row">
+                    <Button variant="info" className="col-md-7 me-2" onClick={() => handleOpenAddDreams(list.id)}>
+                        Add Dreams
+                    </Button>
+                    <Button variant="warning" size="sm" className="col-md-4" onClick={() => handleFilterClick(list.id)}>
+                        Filter
+                    </Button>
+                </div>
             </Accordion.Body>
         </Accordion.Item>
-    });
+    ));
+
 
     return (
         <div className="sidebar">
@@ -155,7 +152,7 @@ function DreamListSidebar(props) {
 
             <CreateDreamListModal show={modalShow} onHide={() => setModalShow(false)} currentUser={currentUser} />
             <Accordion defaultActiveKey="0">
-                {dreamListsArray}
+                {accordionItems}
             </Accordion>
             <p className="sidebar-paragraph mt-2 mb-0">
                 Save your dream to a list and you can see their titles below the list.

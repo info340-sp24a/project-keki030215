@@ -8,10 +8,10 @@ function CreateDreamListModal(props) {
     const { show, onHide, currentUser } = props;
     const [listName, setListName] = useState("");
 
-    const handleSave = () => {
+    function handleSave() {
         if (!currentUser) {
-                alert("You must be logged in to create a dream list.");
-                return;
+            alert("You must be logged in to create a dream list.");
+            return;
         }
         if (!listName.trim()) {
             alert("Please enter a name for the dream list.");
@@ -29,7 +29,7 @@ function CreateDreamListModal(props) {
             });
     };
 
-    const handleListNameChange = (event) => {
+    function handleListNameChange(event) {
         setListName(event.target.value);
     }
 

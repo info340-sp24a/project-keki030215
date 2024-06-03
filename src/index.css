@@ -74,7 +74,7 @@ h1 {
     margin-top: 50px;
 }
 
-form {
+.main-form {
     padding: 0 3.5rem;
 }
 
@@ -358,7 +358,7 @@ footer {
 
 @media (min-width: 1400px) {
     /* Form Styling */
-    form {
+    .main-form {
         padding: 2rem 15.5rem 0;
     }
 }
