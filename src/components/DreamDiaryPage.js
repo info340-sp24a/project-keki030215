@@ -77,40 +77,66 @@ export function DreamDiary(props) {
         setSelectedDream(entryId);
     }
 
-    function handleNotificationClick(dream, index) {
-        const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
-        setNewDreamNotifications(updatedNotifications);
+    function handleNotificationClick(event) {
+        const dreamId = event.currentTarget.dataset.dreamid;
+        const dream = combinedEntries.find((dream) => {
+            return dream.id === dreamId;
+        });
         setCurrentDream(dream);
         setShowEditModal(true);
+        const updatedNotifications = newDreamNotifications.filter((notification) => {
+            return notification.id !== dreamId;
+        });
+        setNewDreamNotifications(updatedNotifications);
     };
-    
+
     function handleEditSave(updatedDream) {
         const db = getDatabase();
         const dreamRef = ref(db, `dreams/${currentUser.uid}/${updatedDream.id}`);
         firebaseUpdate(dreamRef, updatedDream)
             .then(() => {
                 setNewDreamNotifications((prevNotifications) => {
-                    return prevNotifications.filter((notification) => notification.id !== updatedDream.id);
+                    return filterNotifications(prevNotifications, updatedDream.id);
                 });
-                setDreamEntries((prevEntries) => prevEntries.map((entry) => {
-                    if (entry.id === updatedDream.id) {
-                        return updatedDream;
-                    } else {
-                        return entry;
-                    }
-                }));                
+    
+                setDreamEntries((prevEntries) => {
+                    return updateDreamEntries(prevEntries, updatedDream);
+                });
+                
                 setShowEditModal(false);
             })
             .catch((error) => {
-                console.error("Error updating dream in Firebase:", error);
+                console.log("Error updating dream in Firebase:", error);
             });
+    }
+
+    function filterNotifications(prevNotifications, dreamId) {
+        const filteredNotifications = prevNotifications.filter((notification) => {
+            return notification.id !== dreamId;
+        });
+        return filteredNotifications;
+    }
+    
+    function updateDreamEntries(prevEntries, updatedDream) {
+        const updatedEntries = prevEntries.map((entry) => {
+            if (entry.id === updatedDream.id) {
+                return updatedDream;
+            } else {
+                return entry;
+            }
+        });
+        return updatedEntries;
     }
 
     function handleClose() {
         setShowEditModal(false);
     };
 
-    function handleDreamEdit(dreamData) {
+    function handleDreamEdit(event) {
+        const dreamId = event.currentTarget.dataset.dreamid;
+        const dreamData = combinedEntries.find((dreamData) => {
+            return dreamData.id === dreamId;
+        });
         setCurrentDream(dreamData)
         setShowEditModal(true);
     }
@@ -204,7 +230,8 @@ export function DreamDiary(props) {
                         <button 
                             aria-label="Check New Dream"
                             className="edit-dream-button"
-                            onClick={() => handleDreamEdit(dreamData)}>
+                            data-dreamid={dreamData.id}
+                            onClick={handleDreamEdit}>
                             Edit Dream
                         </button>
                         </div>                  
@@ -228,7 +255,8 @@ export function DreamDiary(props) {
             aria-label="Check New Dream"
             key={index} 
             className="notification-button" 
-            onClick={() => handleNotificationClick(dream, index)}>
+            data-dreamid={dream.id}
+            onClick={handleNotificationClick}>
             New Dream Added - Click to View!
         </button>
         )
@@ -249,7 +277,7 @@ export function DreamDiary(props) {
                 <EditDreamModal 
                     show={showEditModal} 
                     onHide={handleClose} 
-                    dream={currentDream}
+                    dreamId={currentDream.id}
                     onSave={handleEditSave}
                     currentUser={currentUser}
                 />

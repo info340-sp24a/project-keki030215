@@ -4,31 +4,44 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
+import { getDatabase, ref, onValue } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 
 export function EditDreamModal(props) {
-    const { currentUser, show, onHide, dream, onSave } = props;
+    const { currentUser, show, onHide, dreamId, onSave } = props;
 
     const [editedDream, setEditedDream] = useState({
-        title: dream.title || "",
-        entry: dream.entry || "",
-        dreamType: dream.dreamType || "normal",
-        tags: dream.tags || [],
-        img: dream.img || null,
-        id: dream.id || null
+        title: "",
+        entry: "",
+        dreamType: "normal",
+        tags: [],
+        img: "img/no-img-dream.jpeg",
+        id: dreamId
     });
+    
 
     useEffect(() => {
-        setEditedDream({
-            title: dream.title || "",
-            entry: dream.entry || "",
-            dreamType: dream.dreamType || "normal",
-            tags: dream.tags || [],
-            img: dream.img || null,
-            id: dream.id || null
-        });
-    }, [dream]);
+        if (show && dreamId && currentUser) {
+            const db = getDatabase();
+            const dreamRef = ref(db, `dreams/${currentUser.uid}/${dreamId}`);
+            onValue(dreamRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    setEditedDream({
+                        id: dreamId,
+                        title: data.title || "",
+                        entry: data.entry || "",
+                        dreamType: data.dreamType || "normal",
+                        tags: data.tags || [],
+                        img: data.img || "img/no-img-dream.jpeg",
+                    });
+                }
+            }, {
+                onlyOnce: true
+            });
+    }
+}, [show, dreamId, currentUser]);
 
     function handleChange(event) {
         const { name, value } = event.target;

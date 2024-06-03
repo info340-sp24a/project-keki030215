@@ -28,7 +28,6 @@ export function Main(props) {
             addDreamEntry(newDream);
             setShowSubmissionModal(true);
             setDreamText("");
-            console.log("Form submitted with dream text:", dreamText);
           }
     };
 

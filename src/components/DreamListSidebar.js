@@ -10,20 +10,26 @@ function DreamListSidebar(props) {
     const [modalShow, setModalShow] = useState(false);
     const [addDreamModalShow, setAddDreamModalShow] = useState(false);
     const [currentListId, setCurrentListId] = useState(null);
-    const [filteredListId, setFilteredListId] = useState(null);
 
     useEffect(() => {
         if (currentUser) {
             const db = getDatabase();
             const dreamsRef = ref(db, `dreams/${currentUser.uid}`);
-            onValue(dreamsRef, (snapshot) => {
+            const unsubscribe = onValue(dreamsRef, (snapshot) => {
                 const dreams = snapshot.val() || {};
-                const dreamsMap = {};
-                Object.entries(dreams).forEach(([id, details]) => {
-                    dreamsMap[id] = { id, ...details };
-                });
+                const dreamsMap = Object.entries(dreams).reduce((acc, [id, details]) => {
+                    return ({
+                    ...acc,
+                    [id]: { id, ...details }
+                });}, {});
                 setAllDreams(dreamsMap);
             });
+
+            function cleanup() {
+                unsubscribe();
+            }
+
+            return cleanup;
         }
     }, [currentUser]);
 
@@ -46,7 +52,6 @@ function DreamListSidebar(props) {
 
     function handleFilterClick(event) {
         const listId = event.currentTarget.dataset.listId;
-        setFilteredListId(listId);
         if (props.onSelectList) {
             props.onSelectList(listId);
         }
@@ -91,7 +96,6 @@ function DreamListSidebar(props) {
             firebaseUpdate(listRef, { id: dreamId, title: dreamToAdd.title })
                 .then(() => {
                     setAddDreamModalShow(false);
-                    console.log(filteredListId);
                 })
                 .catch((error) => {
                     console.log("Error adding dream to list:", error);
@@ -139,7 +143,6 @@ function DreamListSidebar(props) {
     }
 
     function handleClearFilter() {
-        setFilteredListId(null);
         if (props.onSelectList) {
             props.onSelectList(null);
         }
@@ -161,23 +164,24 @@ function DreamListSidebar(props) {
     )});
     
     return (
-        <div className="sidebar text-center">
+        <div className="sidebar">
             <h1 className="sidebar-title">Dream List</h1>
-            <Button 
-             className="mx-auto"
-             variant="dark"
-             onClick={handleCreateNewDreamListClick}
-             aria-label="create new dream list">
-                Create New Dream List
-            </Button>
-            <Button 
-                variant="secondary" 
-                className="my-2" 
-                onClick={handleClearFilter}
-                aria-label="Clear filter"
-            >
-                Clear Filter
-            </Button>
+            <div className="button-container">
+                <Button 
+                className="mx-auto"
+                variant="dark"
+                onClick={handleCreateNewDreamListClick}
+                aria-label="create new dream list">
+                    Create New Dream List
+                </Button>
+                <Button 
+                    variant="secondary" 
+                    className="my-2" 
+                    onClick={handleClearFilter}
+                    aria-label="Clear filter">
+                    Clear Filter
+                </Button>
+            </div>
 
             <CreateDreamListModal show={modalShow} onHide={handleHideModal} currentUser={currentUser} />
             <Accordion defaultActiveKey="0">
