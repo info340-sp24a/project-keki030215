@@ -30,36 +30,38 @@ export function EditDreamModal(props) {
         });
     }, [dream]);
 
-    const handleChange = (event) => {
+    function handleChange(event) {
         const { name, value } = event.target;
-        setEditedDream((prev) => (
-            { ...prev, [name]: value }
-        ));
+        setEditedDream((prev) => {
+            return { ...prev, [name]: value }
+        });
     };
 
-    const handleTagChange = (event) => {
-        setEditedDream((prev) => (
-            { ...prev, tags: event.target.value.split(',').map(tag => tag.trim()) }
-        ));
+    function handleTagChange(event) {
+        setEditedDream((prev) => {
+            return { ...prev, tags: event.target.value.split(',').map(tag => tag.trim()) }
+        });
     };   
 
-    const handleImageChange = (event) => {
+    function handleImageChange(event) {
         if (event.target.files[0]) {
             const file = event.target.files[0];
             const storage = getStorage();
             const imageRef = storageRef(storage, `dream-diary-imgs/${file.name}`);
             uploadBytes(imageRef, file)
-            .then( () => {
+            .then(() => {
                 return getDownloadURL(imageRef);
             })
             .then((downloadURL) => {
-                setEditedDream((prev) => ({ ...prev, img: downloadURL }));
+                setEditedDream((prev) => {
+                    return { ...prev, img: downloadURL }
+                });
                 console.log("Image uploaded and URL is:", downloadURL);
             })
         }
     };
 
-    const handleSaveClick = () => {
+    function handleSaveClick() {
         if (!currentUser) {
             alert("You are not signed in, your dream CANNOT save permenantly :-(");
             return;

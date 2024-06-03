@@ -44,7 +44,8 @@ function DreamListSidebar(props) {
         }
     }, [currentUser]);
 
-    function handleFilterClick(listId) {
+    function handleFilterClick(event) {
+        const listId = event.currentTarget.dataset.listId;
         setFilteredListId(listId);
         if (props.onSelectList) {
             props.onSelectList(listId);
@@ -52,6 +53,10 @@ function DreamListSidebar(props) {
     }
 
     function handleToggleDreamsVisibility(listId) {
+        performToggleDreamsVisibility(listId);
+    }
+
+    function performToggleDreamsVisibility(listId) {
         setDreamLists(function(currentLists) {
             const updatedLists = [];
             for (let i = 0; i < currentLists.length; i++) {
@@ -66,12 +71,15 @@ function DreamListSidebar(props) {
         });
     }
 
-    function handleOpenAddDreams(listId) {
+    function handleOpenAddDreams(event) {
+        const listId = event.currentTarget.dataset.listId;
         setCurrentListId(listId);
         setAddDreamModalShow(true);
     }
 
-    function handleAddDreamToList(dreamId) {
+
+    function handleAddDreamToList(event) {
+        const dreamId = event.currentTarget.dataset.listId;
         if (currentListId && dreamId) {
             const db = getDatabase();
             const dreamToAdd = allDreams[dreamId];
@@ -93,7 +101,7 @@ function DreamListSidebar(props) {
 
     const accordionItems = dreamLists.map((list) => (
         <Accordion.Item eventKey={String(list.id)} key={list.id}>
-            <Accordion.Header onClick={() => handleToggleDreamsVisibility(list.id)}>{list.name}</Accordion.Header>
+            <Accordion.Header onClick={handleToggleDreamsVisibility}>{list.name}</Accordion.Header>
             <Accordion.Body>
             <ul>
                             {(() => {
@@ -115,42 +123,62 @@ function DreamListSidebar(props) {
                             })()}
                         </ul>
                 <div className="row">
-                    <Button variant="info" className="col-md-7 me-2" onClick={() => handleOpenAddDreams(list.id)}>
+                    <Button variant="info" className="col-md-7 me-2"  data-list-id={list.id} onClick={handleOpenAddDreams}>
                         Add Dreams
                     </Button>
-                    <Button variant="warning" size="sm" className="col-md-4" onClick={() => handleFilterClick(list.id)}>
+                    <Button variant="warning" size="sm" className="col-md-4" data-list-id={list.id} onClick={handleFilterClick}>
                         Filter
                     </Button>
                 </div>
             </Accordion.Body>
         </Accordion.Item>
     ));
+    
+    function handleCreateNewDreamListClick() {
+        setModalShow(true);
+    }
 
+    function handleClearFilter() {
+        setFilteredListId(null);
+        if (props.onSelectList) {
+            props.onSelectList(null);
+        }
+    }
 
+    function handleHideModal() {
+        setModalShow(false);
+    }
+
+    function handleHideDreamModal() {
+        setAddDreamModalShow(false);
+    }
+
+    const titleArray = Object.values(allDreams).map((dream) => {
+        return (
+        <ListGroup.Item key={dream.id} action data-list-id={dream.id} onClick={handleAddDreamToList}>
+            {dream.title}
+        </ListGroup.Item>
+    )});
+    
     return (
         <div className="sidebar">
             <p className="sidebar-title">Dream List</p>
             <Button 
              variant="dark"
-             onClick={() => setModalShow(true)}
+             onClick={handleCreateNewDreamListClick}
              aria-label="create new dream list">
                 Create New Dream List
             </Button>
             <Button 
                 variant="secondary" 
                 className="my-2" 
-                onClick={() => {
-                    setFilteredListId(null);
-                    if (props.onSelectList) {
-                        props.onSelectList(null);
-                    }
-                }}
+                onClick={handleClearFilter}
                 aria-label="Clear filter"
             >
                 Clear Filter
             </Button>
 
-            <CreateDreamListModal show={modalShow} onHide={() => setModalShow(false)} currentUser={currentUser} />
+            <CreateDreamListModal show={modalShow} onHide={handleHideModal} currentUser={currentUser} />
             <Accordion defaultActiveKey="0">
                 {accordionItems}
             </Accordion>
@@ -160,17 +188,13 @@ function DreamListSidebar(props) {
             <p className="sidebar-paragraph">
                 You can also do filtering to only display those dreams!
             </p>
-            <Modal show={addDreamModalShow} onHide={() => setAddDreamModalShow(false)}>
+            <Modal show={addDreamModalShow} onHide={handleHideDreamModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Dreams to List</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <ListGroup>
-                    {Object.values(allDreams).map((dream) => (
-                        <ListGroup.Item key={dream.id} action onClick={() => handleAddDreamToList(dream.id)}>
-                            {dream.title}
-                        </ListGroup.Item>
-                    ))}
+                    {titleArray}
                 </ListGroup>
                 </Modal.Body>
             </Modal>

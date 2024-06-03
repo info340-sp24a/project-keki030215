@@ -14,8 +14,8 @@ export function DreamDiary(props) {
     const [showEditModal, setShowEditModal] = useState(false);
     const [currentDream, setCurrentDream] = useState({});
     const [combinedEntries, setCombinedEntries] = useState([...initialDreamEntries]);
-    const [inputtedText, setInputtedText] = useState('');
-    const [inputtedDate, setInputtedDate] = useState('');
+    const [inputtedText, setInputtedText] = useState("");
+    const [inputtedDate, setInputtedDate] = useState("");
     const [filteredEntries, setFilteredEntries] = useState([]);
     const [selectedListId, setSelectedListId] = useState(null);
 
@@ -35,7 +35,12 @@ export function DreamDiary(props) {
                 setFilteredEntries([...initialDreamEntries, ...loadedDreams]);
             });
     
-            return () => unsubscribe();
+            function cleanup() {
+                unsubscribe();
+            }
+
+            return cleanup;
+
         } else {
             setCombinedEntries([...initialDreamEntries]);
             setDreamEntries([]);
@@ -54,7 +59,9 @@ export function DreamDiary(props) {
                     const dreamRef = ref(db, `dreams/${currentUser.uid}/${dreamId}`);
                     onValue(dreamRef, (dreamSnap) => {
                         const dreamData = { id: dreamSnap.key, ...dreamSnap.val() };
-                        setFilteredEntries(prevEntries => [...prevEntries, dreamData]);
+                        setFilteredEntries((prevEntries) => {
+                            return [...prevEntries, dreamData];
+                        });
                     });
                 });
             });
@@ -71,12 +78,10 @@ export function DreamDiary(props) {
     }
 
     function handleNotificationClick(dream, index) {
-        return function() {
-            const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
-            setNewDreamNotifications(updatedNotifications);
-            setCurrentDream(dream);
-            setShowEditModal(true);
-        };
+        const updatedNotifications = newDreamNotifications.filter((_, i) => i !== index);
+        setNewDreamNotifications(updatedNotifications);
+        setCurrentDream(dream);
+        setShowEditModal(true);
     };
     
     function handleEditSave(updatedDream) {
@@ -84,9 +89,9 @@ export function DreamDiary(props) {
         const dreamRef = ref(db, `dreams/${currentUser.uid}/${updatedDream.id}`);
         firebaseUpdate(dreamRef, updatedDream)
             .then(() => {
-                setNewDreamNotifications((prevNotifications) =>
-                    prevNotifications.filter(notification => notification.id !== updatedDream.id)
-                );
+                setNewDreamNotifications((prevNotifications) => {
+                    return prevNotifications.filter((notification) => notification.id !== updatedDream.id);
+                });
                 setDreamEntries((prevEntries) => prevEntries.map((entry) => {
                     if (entry.id === updatedDream.id) {
                         return updatedDream;
@@ -110,17 +115,17 @@ export function DreamDiary(props) {
         setShowEditModal(true);
     }
 
-    const handleTextChange = (event) => {
+    function handleTextChange(event) {
         const typedValue = event.target.value;
         setInputtedText(typedValue);
     }
 
-    const handleDateChange = (event) => {
+    function handleDateChange(event) {
         const typedValue = event.target.value;
         setInputtedDate(typedValue);
     }
 
-    const handleSearch = (event) => {
+    function handleSearch(event) {
         const year = inputtedDate.slice(0, 4);
         const month = inputtedDate.slice(5, 7);
         const day = inputtedDate.slice(8, 10);
@@ -145,7 +150,7 @@ export function DreamDiary(props) {
         }
     }
 
-    const handleKeyDown = (event) => {
+    function handleKeyDown(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             handleSearch();
@@ -191,8 +196,6 @@ export function DreamDiary(props) {
                             <div className="card dream-entry-text">
                                 {dreamData.entry}
                             </div>
-                            <div>
-                            </div>
                             <div className="dream-image text-center">
                                 <img className="dream-entry-img" src={dreamData.img} alt={dreamData.title} />
                             </div>
@@ -201,7 +204,7 @@ export function DreamDiary(props) {
                         <button 
                             aria-label="Check New Dream"
                             className="edit-dream-button"
-                            onClick={(event) => handleDreamEdit(dreamData)}>
+                            onClick={() => handleDreamEdit(dreamData)}>
                             Edit Dream
                         </button>
                         </div>                  
@@ -225,7 +228,7 @@ export function DreamDiary(props) {
             aria-label="Check New Dream"
             key={index} 
             className="notification-button" 
-            onClick={handleNotificationClick(dream, index)}>
+            onClick={() => handleNotificationClick(dream, index)}>
             New Dream Added - Click to View!
         </button>
         )
@@ -235,7 +238,7 @@ export function DreamDiary(props) {
     const filteredEntriesArray = filteredEntries.map((dream) => {
         const transformed = (
             <DreamCard key={dream.id} dreamData={dream} />
-        )
+        );
         return transformed
     });
 

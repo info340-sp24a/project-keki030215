@@ -49,7 +49,7 @@ export function App(props) {
         });
     }, [db, currentUser]);
 
-    const addDreamEntry = (newDream) => {
+    function addDreamEntry(newDream) {
         if (!currentUser) {
             console.log("No user signed in!");
             alert("You must be logged in to save dreams. :-(");
@@ -73,7 +73,7 @@ export function App(props) {
                     );
                 })
                 .catch((error) => {
-                    console.error("Error updating dream in Firebase:", error);
+                    console.log("Error updating dream in Firebase:", error);
                 });
         } else {
             const newDreamRef = firebasePush(ref(db, `dreams/${currentUser.uid}`));
@@ -83,7 +83,7 @@ export function App(props) {
                     setNewDreamNotifications((prevNotifications) => [...prevNotifications, { ...newDream, id: newDreamRef.key }]);
                 })
                 .catch((error) => {
-                    console.error("Error adding new dream to Firebase:", error);
+                    console.log("Error adding new dream to Firebase:", error);
                 });
         }
     };

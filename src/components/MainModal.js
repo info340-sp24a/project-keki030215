@@ -4,14 +4,27 @@ import { useNavigate } from 'react-router-dom';
 
 export function NoInputModal({ show, onHide, title }) {
 
-    useEffect(function setupAutoClose() {
-        if (show) {
-            const timer = setTimeout(onHide, 2000);
-            return function cleanup() {
-                clearTimeout(timer);
-            };
-        }
-    }, [show, onHide]);
+  function setupAutoClose() {
+    if (show) {
+        const timer = setTimeout(onHide, 2000);
+        return timer;
+    }
+  }
+
+  function cleanup(timer) {
+      clearTimeout(timer);
+  }
+
+  function effectCleanup(timer) {
+    if (timer) {
+        cleanup(timer);
+    }
+}
+
+  useEffect(() => {
+      const timer = setupAutoClose();
+      return effectCleanup.bind(null, timer);
+  }, [show, onHide]);
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -40,13 +53,26 @@ export function SubmissionModal({ show, onHide, title }) {
         navigate('/dream-diary');
     };
 
-    useEffect(function setupAutoClose() {
-        if (show) {
-            const timer = setTimeout(onHide, 10000);
-            return function cleanup() {
-                clearTimeout(timer);
-            };
-        }
+    function setupAutoClose() {
+      if (show) {
+          const timer = setTimeout(onHide, 10000);
+          return timer;
+      }
+    }
+  
+    function cleanup(timer) {
+        clearTimeout(timer);
+    }
+  
+    function effectCleanup(timer) {
+      if (timer) {
+          cleanup(timer);
+      }
+  }
+  
+    useEffect(() => {
+        const timer = setupAutoClose();
+        return effectCleanup.bind(null, timer);
     }, [show, onHide]);
 
   return (
@@ -60,7 +86,8 @@ export function SubmissionModal({ show, onHide, title }) {
             Your dream has been <mark>successfully recorded</mark>!
         </p>
         <div className="d-grid col-6 mx-auto">
-            <button onClick={handleGoToDreamDiary} 
+            <button
+            onClick={handleGoToDreamDiary} 
             aria-label="go to dream diary" 
             className="btn btn-dark"
             type="button">

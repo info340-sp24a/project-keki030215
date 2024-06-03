@@ -297,15 +297,8 @@ footer {
     }
 
 
-    body main form {
+    main form {
         display: inline-block;
-    }
-
-
-    .corkboard-selector {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
     }
 
 }
@@ -334,14 +327,6 @@ footer {
 
     .top-title {
         font-size: 3rem;
-    }
-
-    .corkboard-card {
-        margin: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
 
     .grid-img {

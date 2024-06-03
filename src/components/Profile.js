@@ -24,7 +24,11 @@ export function Profile(props) {
             }
         });
 
-        return () => unsubscribe();
+        function cleanup() {
+            unsubscribe();
+        }
+
+        return cleanup;
     }, [auth, provider, isSigningOut]);
 
     function goToDreamDiary() {

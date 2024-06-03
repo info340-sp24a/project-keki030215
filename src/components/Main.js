@@ -7,7 +7,7 @@ export function Main(props) {
     const [showNoInputModal, setShowNoInputModal] = useState(false);
     const [showSubmissionModal, setShowSubmissionModal] = useState(false);
 
-    const handleSubmit = function(event) {
+    function handleSubmit(event) {
         event.preventDefault();
         if (!currentUser) {
             alert("You must be logged in to submit a dream. :-(");
@@ -32,15 +32,15 @@ export function Main(props) {
           }
     };
 
-    const handleInputChange = (event) => {
+    function handleInputChange(event) {
         setDreamText(event.target.value);
     };
 
-    const handleNoInputCloseModal = () => {
+    function handleNoInputCloseModal() {
         setShowNoInputModal(false);
     };
 
-    const handleSubmissionCloseModal = () => {
+    function handleSubmissionCloseModal() {
         setShowSubmissionModal(false);
     };
 
