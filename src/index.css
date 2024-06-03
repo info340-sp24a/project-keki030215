@@ -356,28 +356,6 @@ footer {
 
 
 
-@media (min-width: 992px) {
-    /* Navigation Bar Color and Style */
-    nav {
-        padding: 5px;
-    }
-
-    /* Navigation Bar Alignment */
-    nav li {
-        display: inline-block;
-    }
-
-    /* Navigation Text Styling */
-    nav h1 {
-        margin-top: 1rem;
-    }
-
-    /* Form Styling */
-    form {
-        padding: 2rem 15.5rem 0;
-    }
-}
-
 @media (min-width: 1400px) {
     /* Form Styling */
     form {

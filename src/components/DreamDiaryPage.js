@@ -187,7 +187,7 @@ export function DreamDiary(props) {
                 
                 <Collapse in={close && dreamData.id === selectedDream}>
                     <div>
-                        <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                        <div className="d-flex flex-column flex-lg-row align-items-center justify-content-center">
                             <div className="card dream-entry-text">
                                 {dreamData.entry}
                             </div>
@@ -265,10 +265,10 @@ export function DreamDiary(props) {
             <section>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-lg-3">
                             <DreamListSidebar currentUser={currentUser} onSelectList={setSelectedListId} />
                         </div>
-                        <div className="col-md-9 justify-content-evenly">
+                        <div className="col-lg-9 justify-content-evenly">
                             <div className="row justify-content-evenly">
                                 {filteredEntriesArray}
                             </div>
