@@ -1,30 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 
-export function NoInputModal({ show, onHide, title }) {
-
-  function setupAutoClose() {
-    if (show) {
-        const timer = setTimeout(onHide, 2000);
-        return timer;
-    }
-  }
-
-  function cleanup(timer) {
-      clearTimeout(timer);
-  }
-
-  function effectCleanup(timer) {
-    if (timer) {
-        cleanup(timer);
-    }
-}
-
-  useEffect(() => {
-      const timer = setupAutoClose();
-      return effectCleanup.bind(null, timer);
-  }, [show, onHide]);
+export function NoInputModal(props) {
+  const { show, onHide, title } = props;
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -44,36 +23,15 @@ export function NoInputModal({ show, onHide, title }) {
 }
 
 
-export function SubmissionModal({ show, onHide, title }) {
+export function SubmissionModal(props) {
 
-    const navigate = useNavigate();
+  const { show, onHide, title } = props;
+  const navigate = useNavigate();
 
-    function handleGoToDreamDiary() {
-        onHide();
-        navigate('/dream-diary');
-    };
-
-    function setupAutoClose() {
-      if (show) {
-          const timer = setTimeout(onHide, 10000);
-          return timer;
-      }
-    }
-  
-    function cleanup(timer) {
-        clearTimeout(timer);
-    }
-  
-    function effectCleanup(timer) {
-      if (timer) {
-          cleanup(timer);
-      }
-  }
-  
-    useEffect(() => {
-        const timer = setupAutoClose();
-        return effectCleanup.bind(null, timer);
-    }, [show, onHide]);
+  function handleGoToDreamDiary() {
+      onHide();
+      navigate('/dream-diary');
+  };
 
   return (
     <Modal show={show} onHide={onHide} centered>
