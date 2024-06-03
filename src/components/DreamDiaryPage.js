@@ -219,18 +219,30 @@ export function DreamDiary(props) {
         
     }
 
+    const newDreamNotificationsArray = newDreamNotifications.map((dream, index) => {
+        const transformed = (
+        <button 
+            aria-label="Check New Dream"
+            key={index} 
+            className="notification-button" 
+            onClick={handleNotificationClick(dream, index)}>
+            New Dream Added - Click to View!
+        </button>
+        )
+        return transformed
+    });
+
+    const filteredEntriesArray = filteredEntries.map((dream) => {
+        const transformed = (
+            <DreamCard key={dream.id} dreamData={dream} />
+        )
+        return transformed
+    });
+
     return (
         <div>
             <div className="mt-2 d-flex notifications align-items-center justify-content-center">
-                {newDreamNotifications.map((dream, index) => (
-                    <button 
-                        aria-label="Check New Dream"
-                        key={index} 
-                        className="notification-button" 
-                        onClick={handleNotificationClick(dream, index)}>
-                        New Dream Added - Click to View!
-                    </button>
-                ))}
+                {newDreamNotificationsArray}
                 <EditDreamModal 
                     show={showEditModal} 
                     onHide={handleClose} 
@@ -258,9 +270,7 @@ export function DreamDiary(props) {
                         </div>
                         <div className="col-md-9 justify-content-evenly">
                             <div className="row justify-content-evenly">
-                                {filteredEntries.map((dream) => (
-                                    <DreamCard key={dream.id} dreamData={dream} />
-                                ))}
+                                {filteredEntriesArray}
                             </div>
                         </div>
                     </div>

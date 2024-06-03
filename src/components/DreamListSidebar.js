@@ -90,6 +90,46 @@ function DreamListSidebar(props) {
         }
     };
 
+    const dreamListsArray = dreamLists.map((list, index) => {
+        <Accordion.Item eventKey={String(index)} key={list.id}>
+            <Accordion.Header onClick={() => handleToggleDreamsVisibility(list.id)}>{list.name}</Accordion.Header>
+            <Accordion.Body>
+            <ul>
+                {(() => {
+                    const dreams = list.dreams;
+                    let dreamElements = [];
+
+                    if (dreams && Object.keys(dreams).length > 0) {
+                        for (const key in dreams) {
+                            if (dreams.hasOwnProperty(key)) {
+                                const dream = dreams[key];
+                                dreamElements.push(<li key={dream.id}>{dream.title}</li>);
+                            }
+                        }
+                    } else {
+                        dreamElements.push(<li key="no-dreams">You did not add any dreams yet...</li>);
+                    }
+
+                    return dreamElements;
+                })()}
+            </ul>
+            <div className="row">
+                <Button variant="info" className="col-md-7 me-2"
+                 onClick={() => handleOpenAddDreams(list.id)}
+                 aria-label="add dream to the dream list">
+                    Add Dreams
+                </Button>
+                <Button 
+                 variant="warning" size="sm" className="col-md-4"
+                 onClick={() => handleFilterClick(list.id)}
+                 aria-label="Filter dream in the list">
+                    Filter
+                </Button>
+            </div>
+            </Accordion.Body>
+        </Accordion.Item>
+    });
+
     return (
         <div className="sidebar">
             <p className="sidebar-title">Dream List</p>
@@ -115,45 +155,7 @@ function DreamListSidebar(props) {
 
             <CreateDreamListModal show={modalShow} onHide={() => setModalShow(false)} currentUser={currentUser} />
             <Accordion defaultActiveKey="0">
-                {dreamLists.map((list, index) => (
-                    <Accordion.Item eventKey={String(index)} key={list.id}>
-                        <Accordion.Header onClick={() => handleToggleDreamsVisibility(list.id)}>{list.name}</Accordion.Header>
-                        <Accordion.Body>
-                        <ul>
-                            {(() => {
-                                const dreams = list.dreams;
-                                let dreamElements = [];
-
-                                if (dreams && Object.keys(dreams).length > 0) {
-                                    for (const key in dreams) {
-                                        if (dreams.hasOwnProperty(key)) {
-                                            const dream = dreams[key];
-                                            dreamElements.push(<li key={dream.id}>{dream.title}</li>);
-                                        }
-                                    }
-                                } else {
-                                    dreamElements.push(<li key="no-dreams">You did not add any dreams yet...</li>);
-                                }
-
-                                return dreamElements;
-                            })()}
-                        </ul>
-                        <div className="row">
-                            <Button variant="info" className="col-md-7 me-2"
-                             onClick={() => handleOpenAddDreams(list.id)}
-                             aria-label="add dream to the dream list">
-                                Add Dreams
-                            </Button>
-                            <Button 
-                             variant="warning" size="sm" className="col-md-4"
-                             onClick={() => handleFilterClick(list.id)}
-                             aria-label="Filter dream in the list">
-                                Filter
-                            </Button>
-                        </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                ))}
+                {dreamListsArray}
             </Accordion>
             <p className="sidebar-paragraph mt-2 mb-0">
                 Save your dream to a list and you can see their titles below the list.
