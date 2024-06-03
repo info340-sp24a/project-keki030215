@@ -244,6 +244,7 @@ export function DreamDiary(props) {
                 <form>
                     <label htmlFor="searchbar">Search for a dream:</label>
                     <input type="text" className="search-bar" id="searchbar" name="Search Bar" value={inputtedText} onChange={handleTextChange} placeholder="Search for a dream" onKeyDown={handleKeyDown} />
+                    <label htmlFor="date-filter">Filter by date:</label>
                     <input type="date" className="date-filter" id="date-filter" name="Date Filter" value={inputtedDate} onChange={handleDateChange} onKeyDown={handleKeyDown} />
                     <button type="button" className="search-button" aria-label="Search" onClick={handleSearch} >Search</button>
                 </form>
