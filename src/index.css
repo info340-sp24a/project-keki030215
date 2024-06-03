@@ -125,6 +125,12 @@ label {
     border-color: black !important;
 }
 
+.notification-button {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
 .dream-title, .dream-type {
     text-align: center;
     font-weight: bold;
