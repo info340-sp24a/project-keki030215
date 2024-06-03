@@ -25,7 +25,7 @@ export function EditDreamModal(props) {
         if (show && dreamId && currentUser) {
             const db = getDatabase();
             const dreamRef = ref(db, `dreams/${currentUser.uid}/${dreamId}`);
-            onValue(dreamRef, (snapshot) => {
+            const unsubscribe = onValue(dreamRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     setEditedDream({
@@ -40,6 +40,12 @@ export function EditDreamModal(props) {
             }, {
                 onlyOnce: true
             });
+
+            function cleanup() {
+                unsubscribe();
+            }
+
+            return cleanup;
     }
 }, [show, dreamId, currentUser]);
 
@@ -51,10 +57,13 @@ export function EditDreamModal(props) {
     };
 
     function handleTagChange(event) {
-        setEditedDream((prev) => {
-            return { ...prev, tags: event.target.value.split(',').map(tag => tag.trim()) }
+        const tagsArray = event.target.value.split(',').map((tag) => {
+            return tag.trim()
         });
-    };   
+        setEditedDream((prev) => {
+            return { ...prev, tags: tagsArray };
+        });
+    };  
 
     function handleImageChange(event) {
         if (event.target.files[0]) {
@@ -120,8 +129,7 @@ export function EditDreamModal(props) {
                                 <Form.Select
                                     name="dreamType"
                                     value={editedDream.dreamType}
-                                    onChange={handleChange}
-                                >
+                                    onChange={handleChange}>
                                     <option value="normal">Normal Dream</option>
                                     <option value="nightmare">Nightmare</option>
                                     <option value="lucid">Lucid</option>
@@ -146,7 +154,7 @@ export function EditDreamModal(props) {
                                 {editedDream.img && 
                                 <img src={editedDream.img} 
                                 alt="Dream" 
-                                style={{ width: '100%', marginTop: '10px' }} />}
+                                className="edit-dream-img" />}
                             </Form.Group>
                         </Form>
                     </Row>
