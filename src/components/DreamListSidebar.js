@@ -161,9 +161,10 @@ function DreamListSidebar(props) {
     )});
     
     return (
-        <div className="sidebar">
-            <p className="sidebar-title">Dream List</p>
+        <div className="sidebar text-center">
+            <h1 className="sidebar-title">Dream List</h1>
             <Button 
+             className="mx-auto"
              variant="dark"
              onClick={handleCreateNewDreamListClick}
              aria-label="create new dream list">
