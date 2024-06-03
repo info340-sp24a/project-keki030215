@@ -49,7 +49,7 @@ export function Main(props) {
             <h1 className="toptitle">Welcome!</h1>
             <form className="row" onSubmit={handleSubmit}>
                 <div className="form-group main-page-text">
-                    <label htmlFor="FormControlTextarea1" className="main-page-text">What did you dream about?</label>
+                    <label htmlFor="FormControlTextarea1" className="main-page-text">What did you dream about? <img src="/img/pencil.png" alt="pencil icon" className="pencil-icon" /></label>
                     <textarea
                         className="form-control"
                         id="FormControlTextarea1"

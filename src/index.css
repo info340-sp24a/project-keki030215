@@ -29,6 +29,16 @@ nav ul {
     text-align: center;
 }
 
+.title-container {
+    display: flex;
+    align-items: center;
+}
+
+.title-container .logo {
+    height: 40px; /* Adjust as needed */
+    margin-right: 10px; /* Space between the image and the text */
+}
+
 /* Navigation Button */
 nav button {
     margin: 5px 0;
@@ -71,6 +81,13 @@ form {
 [type="submit"] {
     margin-top: 20px;
     background-color: #002684;
+}
+
+.pencil-icon {
+    margin-left: 10px;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
 }
 
 
@@ -198,8 +215,6 @@ label {
 .dream-description {
     padding: 1rem;
 }
-
-
 
 /* Profile */
 .profile-img {

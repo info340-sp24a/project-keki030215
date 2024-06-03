@@ -5,6 +5,7 @@ export function NavigationBar(props) {
     return (
         <nav>
             <div className="title-container">
+                <img src="/img/favicon.png" alt="Logo" className="logo" />
                 <h1>Dream Recorder</h1>
             </div>
             <ul>
